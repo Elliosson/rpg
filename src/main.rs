@@ -7,6 +7,9 @@ const PLAYER_SPEED: f32 = 500.0;
 #[derive(Component)]
 struct Player;
 
+#[derive(Component)]
+struct Tree;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -39,9 +42,22 @@ fn setup(
                 translation: Vec3::new(0.0, 0.0, 0.0),
                 ..default()
             },
+            texture: asset_server.load("character.png"),
             ..default()
         },
         Player,
+    ));
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform {
+                translation: Vec3::new(200.0, 200.0, 0.0),
+                ..default()
+            },
+            texture: asset_server.load("tree.png"),
+            ..default()
+        },
+        Tree,
     ));
 }
 
