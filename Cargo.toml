@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 bevy = "0.13.0"
 rand = "0.8.5"
+sepax2d = "0.3"
