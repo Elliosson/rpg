@@ -18,7 +18,7 @@ fn main() {
         // which runs at 64 Hz by default
         .add_systems(
             FixedUpdate,
-            (move_player)
+            (move_player, camera_on_player)
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
@@ -90,4 +90,14 @@ fn move_player(
         player_transform.translation.x + direction_x * PLAYER_SPEED * time.delta_seconds();
     player_transform.translation.y =
         player_transform.translation.y + direction_y * PLAYER_SPEED * time.delta_seconds();
+}
+
+fn camera_on_player(
+    query_player: Query<&Transform, (With<Player>, Without<Camera2d>)>,
+    mut query_camera: Query<&mut Transform, (With<Camera2d>, Without<Player>)>,
+) {
+    let player_transform = query_player.single();
+    for mut camera in query_camera.iter_mut() {
+        camera.translation = player_transform.translation;
+    }
 }
