@@ -19,6 +19,12 @@ enum Sepax2dShape {
 #[derive(Component)]
 struct Collision;
 
+#[derive(Component)]
+struct Slim;
+
+#[derive(Component)]
+struct Rock;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -56,7 +62,7 @@ fn setup(
         },
         Player,
         Collision,
-        Sepax2dShape::Circle(30.),
+        Sepax2dShape::Circle(26.),
     ));
 
     commands.spawn((
@@ -70,7 +76,35 @@ fn setup(
         },
         Tree,
         Collision,
-        Sepax2dShape::Circle(60.),
+        Sepax2dShape::Circle(56.),
+    ));
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform {
+                translation: Vec3::new(-200.0, -200.0, 0.0),
+                ..default()
+            },
+            texture: asset_server.load("slim.png"),
+            ..default()
+        },
+        Slim,
+        Collision,
+        Sepax2dShape::Circle(52.),
+    ));
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform {
+                translation: Vec3::new(-200.0, 200.0, 0.0),
+                ..default()
+            },
+            texture: asset_server.load("rock.png"),
+            ..default()
+        },
+        Rock,
+        Collision,
+        Sepax2dShape::Circle(162.),
     ));
 
     let character_circle: sepax2d::prelude::Circle = sepax2d::prelude::Circle::new((0., 0.), 1.);
