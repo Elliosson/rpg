@@ -1,6 +1,9 @@
 //! A simplified implementation of the classic game "Breakout".
 
+use std::f32::consts::FRAC_PI_2;
+
 use bevy::prelude::*;
+use bevy::window::PrimaryWindow;
 use sepax2d::prelude::*;
 
 const PLAYER_SPEED: f32 = 500.0;
@@ -25,6 +28,9 @@ struct Slim;
 #[derive(Component)]
 struct Rock;
 
+#[derive(Component)]
+struct MainCamera;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -33,7 +39,7 @@ fn main() {
         // which runs at 64 Hz by default
         .add_systems(
             FixedUpdate,
-            (move_player, camera_on_player, collison)
+            (move_player, camera_on_player, collison, rotate_player)
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
@@ -49,7 +55,7 @@ fn setup(
     asset_server: Res<AssetServer>,
 ) {
     // Camera
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn((Camera2dBundle::default(), MainCamera));
 
     commands.spawn((
         SpriteBundle {
@@ -189,5 +195,30 @@ fn camera_on_player(
     let player_transform = query_player.single();
     for mut camera in query_camera.iter_mut() {
         camera.translation = player_transform.translation;
+    }
+}
+
+fn rotate_player(
+    mut query: Query<&mut Transform, With<Player>>,
+    q_windows: Query<&Window, With<PrimaryWindow>>,
+    q_camera: Query<(&Camera, &GlobalTransform), With<MainCamera>>,
+) {
+    let (camera, camera_transform) = q_camera.single();
+    let mut player = query.single_mut();
+    let window = q_windows.single();
+    let player_v2 = player.translation.truncate();
+
+    if let Some(cursor_world_position) = window
+        .cursor_position()
+        .and_then(|cursor| camera.viewport_to_world(camera_transform, cursor))
+        .map(|ray| ray.origin.truncate())
+    {
+        eprintln!(
+            "World coords: {}/{}",
+            cursor_world_position.x, cursor_world_position.y
+        );
+        let diff = cursor_world_position - player_v2;
+        let angle = diff.y.atan2(diff.x) - FRAC_PI_2;
+        player.rotation = Quat::from_rotation_z(angle);
     }
 }
