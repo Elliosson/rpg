@@ -1,6 +1,6 @@
 //! A simplified implementation of the classic game "Breakout".
 
-use std::f32::consts::FRAC_PI_2;
+use std::f32::consts::{FRAC_PI_2, PI};
 
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
@@ -248,13 +248,16 @@ fn weapon_movement(
     let mut weapon_transform = weapon.single_mut();
     let player_transform = player.single();
 
-    let player_radius: f32 = 30.;
+    let player_radius: f32 = 40.;
     let (_, angle) = player_transform.rotation.to_axis_angle();
     let rotation = player_transform.rotation;
-    let magic = rotation.w * rotation.z;
 
-    let dx = -player_radius * magic.sin() * 2.;
-    let dy = player_radius * angle.cos();
+    let asin = rotation.z;
+
+    let true_angle = if asin < 0. { angle } else { -angle };
+
+    let dx = player_radius * true_angle.sin();
+    let dy = player_radius * true_angle.cos();
 
     weapon_transform.translation.x = player_transform.translation.x + dx;
     weapon_transform.translation.y = player_transform.translation.y + dy;
