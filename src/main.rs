@@ -248,7 +248,7 @@ fn weapon_movement(
     let mut weapon_transform = weapon.single_mut();
     let player_transform = player.single();
 
-    let player_radius: f32 = 40.;
+    let player_radius: f32 = 60.;
     let (_, angle) = player_transform.rotation.to_axis_angle();
     let rotation = player_transform.rotation;
 
@@ -256,8 +256,10 @@ fn weapon_movement(
 
     let true_angle = if asin < 0. { angle } else { -angle };
 
-    let dx = player_radius * true_angle.sin();
-    let dy = player_radius * true_angle.cos();
+    let left_hand_angle = true_angle - 1.;
+
+    let dx = player_radius * left_hand_angle.sin();
+    let dy = player_radius * left_hand_angle.cos();
 
     weapon_transform.translation.x = player_transform.translation.x + dx;
     weapon_transform.translation.y = player_transform.translation.y + dy;
