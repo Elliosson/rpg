@@ -31,6 +31,9 @@ struct Rock;
 #[derive(Component)]
 struct MainCamera;
 
+#[derive(Component)]
+struct EquipedWeapon;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -39,7 +42,13 @@ fn main() {
         // which runs at 64 Hz by default
         .add_systems(
             FixedUpdate,
-            (move_player, camera_on_player, collison, rotate_player)
+            (
+                move_player,
+                camera_on_player,
+                collison,
+                rotate_player,
+                weapon_movement,
+            )
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
@@ -97,6 +106,15 @@ fn setup(
         Slim,
         Collision,
         Sepax2dShape::Circle(52.),
+    ));
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform { ..default() },
+            texture: asset_server.load("hammer.png"),
+            ..default()
+        },
+        EquipedWeapon,
     ));
 
     commands.spawn((
@@ -221,4 +239,24 @@ fn rotate_player(
         let angle = diff.y.atan2(diff.x) - FRAC_PI_2;
         player.rotation = Quat::from_rotation_z(angle);
     }
+}
+
+fn weapon_movement(
+    player: Query<&Transform, (With<Player>, Without<EquipedWeapon>)>,
+    mut weapon: Query<&mut Transform, (With<EquipedWeapon>, Without<Player>)>,
+) {
+    let mut weapon_transform = weapon.single_mut();
+    let player_transform = player.single();
+
+    let player_radius: f32 = 30.;
+    let (_, angle) = player_transform.rotation.to_axis_angle();
+    let rotation = player_transform.rotation;
+    let magic = rotation.w * rotation.z;
+
+    let dx = -player_radius * magic.sin() * 2.;
+    let dy = player_radius * angle.cos();
+
+    weapon_transform.translation.x = player_transform.translation.x + dx;
+    weapon_transform.translation.y = player_transform.translation.y + dy;
+    weapon_transform.rotation = player_transform.rotation;
 }
