@@ -6,7 +6,7 @@ use bevy::prelude::*;
 use bevy::time::Stopwatch;
 use bevy::window::PrimaryWindow;
 use std::time::Instant;
-const PLAYER_SPEED: f32 = 500.0;
+const PLAYER_SPEED: f32 = 200.0;
 
 #[derive(Component)]
 struct Player;
