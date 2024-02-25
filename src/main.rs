@@ -1,11 +1,11 @@
 //! A simplified implementation of the classic game "Breakout".
 
-use std::f32::consts::{FRAC_PI_2, PI};
+use std::f32::consts::FRAC_PI_2;
 
 use bevy::prelude::*;
+use bevy::time::Stopwatch;
 use bevy::window::PrimaryWindow;
-use sepax2d::prelude::*;
-
+use std::time::Instant;
 const PLAYER_SPEED: f32 = 500.0;
 
 #[derive(Component)]
@@ -34,6 +34,16 @@ struct MainCamera;
 #[derive(Component)]
 struct EquipedWeapon;
 
+#[derive(Component)]
+struct IsAttacking {
+    start_time: Stopwatch,
+}
+
+#[derive(Component)]
+struct DeltaAngle {
+    delta: f32,
+}
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -48,11 +58,12 @@ fn main() {
                 collison,
                 rotate_player,
                 weapon_movement,
+                attack_animation,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
-        .add_systems(Update, bevy::window::close_on_esc)
+        .add_systems(Update, (bevy::window::close_on_esc, mouse_button_input))
         .run();
 }
 
@@ -78,6 +89,7 @@ fn setup(
         Player,
         Collision,
         Sepax2dShape::Circle(26.),
+        DeltaAngle { delta: 0. },
     ));
 
     commands.spawn((
@@ -217,12 +229,12 @@ fn camera_on_player(
 }
 
 fn rotate_player(
-    mut query: Query<&mut Transform, With<Player>>,
+    mut query: Query<(&mut Transform, &DeltaAngle), With<Player>>,
     q_windows: Query<&Window, With<PrimaryWindow>>,
     q_camera: Query<(&Camera, &GlobalTransform), With<MainCamera>>,
 ) {
     let (camera, camera_transform) = q_camera.single();
-    let mut player = query.single_mut();
+    let (mut player, delta_angle) = query.single_mut();
     let window = q_windows.single();
     let player_v2 = player.translation.truncate();
 
@@ -237,7 +249,7 @@ fn rotate_player(
         );
         let diff = cursor_world_position - player_v2;
         let angle = diff.y.atan2(diff.x) - FRAC_PI_2;
-        player.rotation = Quat::from_rotation_z(angle);
+        player.rotation = Quat::from_rotation_z(angle + delta_angle.delta);
     }
 }
 
@@ -264,4 +276,56 @@ fn weapon_movement(
     weapon_transform.translation.x = player_transform.translation.x + dx;
     weapon_transform.translation.y = player_transform.translation.y + dy;
     weapon_transform.rotation = player_transform.rotation;
+}
+
+fn mouse_button_input(
+    mut commands: Commands,
+    buttons: Res<ButtonInput<MouseButton>>,
+    mut player: Query<Entity, (With<Player>, Without<IsAttacking>)>,
+    time: Res<Time>,
+) {
+    if buttons.just_pressed(MouseButton::Left) {
+        // Left button was pressed
+        if let Ok(player_entity) = player.get_single_mut() {
+            commands.entity(player_entity).insert(IsAttacking {
+                start_time: Stopwatch::new(),
+            });
+        }
+    }
+    if buttons.just_released(MouseButton::Left) {
+        // Left Button was released
+    }
+    if buttons.pressed(MouseButton::Right) {
+        // Right Button is being held down
+    }
+    // we can check multiple at once with `.any_*`
+    if buttons.any_just_pressed([MouseButton::Left, MouseButton::Right]) {
+        // Either the left or the right button was just pressed
+    }
+}
+
+fn attack_animation(
+    mut commands: Commands,
+    mut player: Query<
+        (Entity, &mut Transform, &mut IsAttacking, &mut DeltaAngle),
+        (With<Player>, With<IsAttacking>),
+    >,
+    mut weapon: Query<&mut Transform, (With<EquipedWeapon>, Without<Player>)>,
+    time: Res<Time>,
+) {
+    if let Ok((entity, player_transform, mut is_attacking, mut delta_angle)) =
+        player.get_single_mut()
+    {
+        is_attacking.start_time.tick(time.delta()).elapsed_secs();
+        let delta_time = is_attacking.start_time.elapsed_secs();
+        println!("delta time {}", delta_time);
+        if delta_time < 0.1 {
+            delta_angle.delta = delta_time * 10.;
+        } else if delta_time < 0.2 {
+            delta_angle.delta = (delta_time - 0.2) * 10.;
+        } else {
+            delta_angle.delta = 0.;
+            commands.entity(entity).remove::<IsAttacking>();
+        }
+    }
 }
