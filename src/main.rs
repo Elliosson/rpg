@@ -44,9 +44,12 @@ struct DeltaAngle {
     delta: f32,
 }
 
+#[derive(Component)]
+struct MapBackground;
+
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_systems(Startup, setup)
         // Add our gameplay simulation systems to the fixed timestep schedule
         // which runs at 64 Hz by default
@@ -141,6 +144,20 @@ fn setup(
         Rock,
         Collision,
         Sepax2dShape::Circle(162.),
+    ));
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform {
+                translation: Vec3::new(0., 0., -1.0),
+                scale: Vec3::splat(4.0),
+                ..default()
+            },
+            texture: asset_server.load("map.png"),
+
+            ..default()
+        },
+        MapBackground,
     ));
 
     let character_circle: sepax2d::prelude::Circle = sepax2d::prelude::Circle::new((0., 0.), 1.);
@@ -320,9 +337,9 @@ fn attack_animation(
         let delta_time = is_attacking.start_time.elapsed_secs();
         println!("delta time {}", delta_time);
         if delta_time < 0.1 {
-            delta_angle.delta = delta_time * 10.;
+            delta_angle.delta = -delta_time * 10.;
         } else if delta_time < 0.2 {
-            delta_angle.delta = (delta_time - 0.2) * 10.;
+            delta_angle.delta = -(delta_time - 0.2) * 10.;
         } else {
             delta_angle.delta = 0.;
             commands.entity(entity).remove::<IsAttacking>();
