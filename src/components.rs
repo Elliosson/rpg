@@ -10,6 +10,7 @@ pub struct Tree;
 #[derive(Component)]
 pub enum Sepax2dShape {
     Circle(f32),
+    Rectangle(f32, f32),
 }
 
 #[derive(Component)]

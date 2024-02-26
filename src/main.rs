@@ -85,6 +85,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             ..default()
         },
         EquipedWeapon,
+        Sepax2dShape::Rectangle(80., 10.),
     ));
 
     commands.spawn((

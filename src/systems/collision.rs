@@ -12,6 +12,7 @@ pub fn collison(
     let radius = if let Sepax2dShape::Circle(radius) = shape {
         *radius
     } else {
+        println!("Player shape is expected to be a circle!");
         0.
     };
 
@@ -29,6 +30,14 @@ pub fn collison(
                 let object = sepax2d::prelude::Circle::new(
                     (transform.translation.x, transform.translation.y),
                     *radius,
+                );
+                sepax2d::prelude::sat_collision(&object, &character_circle)
+            }
+            Sepax2dShape::Rectangle(width, height) => {
+                let object = sepax2d::prelude::Parallelogram::rectangle(
+                    (transform.translation.x, transform.translation.y),
+                    *width,
+                    *height,
                 );
                 sepax2d::prelude::sat_collision(&object, &character_circle)
             }
