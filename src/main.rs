@@ -1,11 +1,8 @@
-//! A simplified implementation of the classic game "Breakout".
-
-use std::f32::consts::FRAC_PI_2;
-
 use bevy::prelude::*;
 use bevy::time::Stopwatch;
 use bevy::window::PrimaryWindow;
-use std::time::Instant;
+use std::f32::consts::FRAC_PI_2;
+
 const PLAYER_SPEED: f32 = 200.0;
 
 #[derive(Component)]
@@ -71,12 +68,7 @@ fn main() {
 }
 
 // Add the game's entities to our world
-fn setup(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
-    asset_server: Res<AssetServer>,
-) {
+fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Camera
     commands.spawn((Camera2dBundle::default(), MainCamera));
 
@@ -299,7 +291,6 @@ fn mouse_button_input(
     mut commands: Commands,
     buttons: Res<ButtonInput<MouseButton>>,
     mut player: Query<Entity, (With<Player>, Without<IsAttacking>)>,
-    time: Res<Time>,
 ) {
     if buttons.just_pressed(MouseButton::Left) {
         // Left button was pressed
@@ -324,15 +315,13 @@ fn mouse_button_input(
 fn attack_animation(
     mut commands: Commands,
     mut player: Query<
-        (Entity, &mut Transform, &mut IsAttacking, &mut DeltaAngle),
+        (Entity, &mut IsAttacking, &mut DeltaAngle),
         (With<Player>, With<IsAttacking>),
     >,
-    mut weapon: Query<&mut Transform, (With<EquipedWeapon>, Without<Player>)>,
+
     time: Res<Time>,
 ) {
-    if let Ok((entity, player_transform, mut is_attacking, mut delta_angle)) =
-        player.get_single_mut()
-    {
+    if let Ok((entity, mut is_attacking, mut delta_angle)) = player.get_single_mut() {
         is_attacking.start_time.tick(time.delta()).elapsed_secs();
         let delta_time = is_attacking.start_time.elapsed_secs();
         println!("delta time {}", delta_time);
