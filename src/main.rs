@@ -3,46 +3,10 @@ use bevy::time::Stopwatch;
 use bevy::window::PrimaryWindow;
 use std::f32::consts::FRAC_PI_2;
 
+mod components;
+pub use components::*;
+
 const PLAYER_SPEED: f32 = 200.0;
-
-#[derive(Component)]
-struct Player;
-
-#[derive(Component)]
-struct Tree;
-
-#[derive(Component)]
-enum Sepax2dShape {
-    Circle(f32),
-}
-
-#[derive(Component)]
-struct Collision;
-
-#[derive(Component)]
-struct Slim;
-
-#[derive(Component)]
-struct Rock;
-
-#[derive(Component)]
-struct MainCamera;
-
-#[derive(Component)]
-struct EquipedWeapon;
-
-#[derive(Component)]
-struct IsAttacking {
-    start_time: Stopwatch,
-}
-
-#[derive(Component)]
-struct DeltaAngle {
-    delta: f32,
-}
-
-#[derive(Component)]
-struct MapBackground;
 
 fn main() {
     App::new()
