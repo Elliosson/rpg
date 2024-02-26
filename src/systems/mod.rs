@@ -12,3 +12,5 @@ mod move_player;
 pub use move_player::*;
 mod camera_on_player;
 pub use camera_on_player::*;
+mod weapon_hit;
+pub use weapon_hit::*;

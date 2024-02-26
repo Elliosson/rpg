@@ -22,6 +22,7 @@ fn main() {
                 rotate_player,
                 weapon_movement,
                 attack_animation,
+                weapon_hit,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
@@ -85,7 +86,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             ..default()
         },
         EquipedWeapon,
-        Sepax2dShape::Rectangle(80., 10.),
+        Sepax2dShape::Rectangle(80., 4.),
     ));
 
     commands.spawn((

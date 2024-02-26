@@ -18,10 +18,6 @@ pub fn rotate_player(
         .and_then(|cursor| camera.viewport_to_world(camera_transform, cursor))
         .map(|ray| ray.origin.truncate())
     {
-        eprintln!(
-            "World coords: {}/{}",
-            cursor_world_position.x, cursor_world_position.y
-        );
         let diff = cursor_world_position - player_v2;
         let angle = diff.y.atan2(diff.x) - FRAC_PI_2;
         player.rotation = Quat::from_rotation_z(angle + delta_angle.delta);
