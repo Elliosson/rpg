@@ -1,7 +1,8 @@
 use crate::components::*;
-use bevy::prelude::*;
+use bevy::{prelude::*, time::Stopwatch};
 
 pub fn weapon_hit(
+    mut commands: Commands,
     mut player: Query<
         (&mut Transform, &Sepax2dShape),
         (
@@ -12,7 +13,7 @@ pub fn weapon_hit(
         ),
     >,
     collidables: Query<
-        (&Transform, &Sepax2dShape),
+        (Entity, &Transform, &Sepax2dShape, Option<&IsHitAnimation>),
         (
             With<Collision>,
             With<Sepax2dShape>,
@@ -45,7 +46,7 @@ pub fn weapon_hit(
             height,
         );
 
-        for (transform, shape) in collidables.iter() {
+        for (entity, transform, shape, maybe_is_hit) in collidables.iter() {
             let (x_delta, y_delta): (f32, f32) = match shape {
                 Sepax2dShape::Circle(radius) => {
                     let object = sepax2d::prelude::Circle::new(
@@ -66,6 +67,20 @@ pub fn weapon_hit(
             if x_delta != 0. || y_delta != 0. {
                 //dommage or something
                 println!("dammage!");
+                //todo handle multiple hit
+                if maybe_is_hit.is_none() {
+                    commands.entity(entity).insert(IsHitAnimation {
+                        dx: x_delta,
+                        dy: y_delta,
+                        start_time: Stopwatch::new(),
+                        already_moved: false,
+                    });
+                }
+
+                //put a isHit component to the hitted object
+                // add a system to make the object react to it like move a little in the oposite directin.
+                //need to be able to have multiple hits from multiple sources.
+                //only one hit by attack? can remember this porbably.
             }
         }
     }

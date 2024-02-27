@@ -23,6 +23,7 @@ fn main() {
                 weapon_movement,
                 attack_animation,
                 weapon_hit,
+                is_hit_animation,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),

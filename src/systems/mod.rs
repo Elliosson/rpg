@@ -14,3 +14,5 @@ mod camera_on_player;
 pub use camera_on_player::*;
 mod weapon_hit;
 pub use weapon_hit::*;
+mod is_hit_animation;
+pub use is_hit_animation::*;

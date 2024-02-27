@@ -40,3 +40,11 @@ pub struct DeltaAngle {
 
 #[derive(Component)]
 pub struct MapBackground;
+
+#[derive(Component)]
+pub struct IsHitAnimation {
+    pub dx: f32,
+    pub dy: f32,
+    pub start_time: Stopwatch,
+    pub already_moved: bool,
+}
