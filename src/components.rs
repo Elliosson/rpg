@@ -48,3 +48,16 @@ pub struct IsHitAnimation {
     pub start_time: Stopwatch,
     pub already_moved: bool,
 }
+
+#[derive(Component)]
+pub struct Lifepoint {
+    pub life: f32,
+}
+
+#[derive(Component)]
+pub struct LifeBar {
+    pub linked_entity: Entity,
+}
+
+#[derive(Component)]
+pub struct IsHit;

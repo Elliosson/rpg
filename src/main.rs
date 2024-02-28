@@ -1,4 +1,7 @@
-use bevy::prelude::*;
+use bevy::{
+    prelude::*,
+    sprite::{MaterialMesh2dBundle, Mesh2dHandle},
+};
 
 mod components;
 pub use components::*;
@@ -24,6 +27,8 @@ fn main() {
                 attack_animation,
                 weapon_hit,
                 is_hit_animation,
+                remove_life,
+                draw_life,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
@@ -33,7 +38,12 @@ fn main() {
 }
 
 // Add the game's entities to our world
-fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn setup(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+) {
     // Camera
     commands.spawn((Camera2dBundle::default(), MainCamera));
 
@@ -66,18 +76,33 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         Sepax2dShape::Circle(56.),
     ));
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform {
-                translation: Vec3::new(-200.0, -200.0, 0.0),
+    let slim_entity = commands
+        .spawn((
+            SpriteBundle {
+                transform: Transform {
+                    translation: Vec3::new(-200.0, -200.0, 0.0),
+                    ..default()
+                },
+                texture: asset_server.load("slim.png"),
                 ..default()
             },
-            texture: asset_server.load("slim.png"),
+            Slim,
+            Collision,
+            Sepax2dShape::Circle(52.),
+            Lifepoint { life: 100. },
+        ))
+        .id();
+
+    commands.spawn((
+        MaterialMesh2dBundle {
+            mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
+            material: materials.add(ColorMaterial::default()),
+            transform: Transform::from_xyz(0.0, 0.0, 0.0),
             ..default()
         },
-        Slim,
-        Collision,
-        Sepax2dShape::Circle(52.),
+        LifeBar {
+            linked_entity: slim_entity,
+        },
     ));
 
     commands.spawn((

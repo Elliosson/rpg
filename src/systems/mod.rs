@@ -16,3 +16,7 @@ mod weapon_hit;
 pub use weapon_hit::*;
 mod is_hit_animation;
 pub use is_hit_animation::*;
+mod draw_life;
+pub use draw_life::*;
+mod remove_life;
+pub use remove_life::*;
