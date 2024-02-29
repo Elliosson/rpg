@@ -22,3 +22,5 @@ mod remove_life;
 pub use remove_life::*;
 mod death;
 pub use death::*;
+mod move_slim;
+pub use move_slim::*;

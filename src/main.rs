@@ -21,6 +21,7 @@ fn main() {
             FixedUpdate,
             (
                 move_player,
+                move_slim,
                 camera_on_player,
                 collison,
                 rotate_player,
