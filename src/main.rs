@@ -112,7 +112,7 @@ fn setup(
             ..default()
         },
         EquipedWeapon,
-        Sepax2dShape::Rectangle(80., 4.),
+        Sepax2dShape::Rectangle(70., 4.),
     ));
 
     commands.spawn((

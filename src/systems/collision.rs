@@ -1,5 +1,6 @@
 use crate::components::*;
 use bevy::prelude::*;
+use sepax2d::Rotate;
 
 pub fn collison(
     mut player: Query<(&mut Transform, &Sepax2dShape), (With<Player>, With<Sepax2dShape>)>,
@@ -34,12 +35,22 @@ pub fn collison(
                 sepax2d::prelude::sat_collision(&object, &character_circle)
             }
             Sepax2dShape::Rectangle(width, height) => {
-                let object = sepax2d::prelude::Parallelogram::rectangle(
+                //rectangle need to be rotated, somehow.
+                let mut object = sepax2d::prelude::Parallelogram::rectangle(
                     (transform.translation.x, transform.translation.y),
                     *width,
                     *height,
                 );
-                sepax2d::prelude::sat_collision(&object, &character_circle)
+                let (_, angle) = transform.rotation.to_axis_angle();
+                let rotation = transform.rotation;
+                let asin = rotation.z;
+                let true_angle = if asin < 0. { angle } else { -angle };
+
+                object.rotate(true_angle);
+                let col = sepax2d::prelude::sat_collision(&object, &character_circle);
+                println!("col");
+                // todo make correction, the same that in weapon hit
+                (0., 0.)
             }
         };
         //super messy resolve. at the end. juste forbit to move if colliding

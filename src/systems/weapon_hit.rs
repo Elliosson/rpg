@@ -1,5 +1,6 @@
 use crate::components::*;
 use bevy::{prelude::*, time::Stopwatch};
+use sepax2d::{Rotate, Shape};
 
 pub fn weapon_hit(
     mut commands: Commands,
@@ -37,14 +38,24 @@ pub fn weapon_hit(
             (0., 0.)
         };
 
-        let weapon_rectangle = sepax2d::prelude::Parallelogram::rectangle(
+        let mut weapon_rectangle = sepax2d::prelude::Parallelogram::rectangle(
             (
-                weapon_transform.translation.x,
+                weapon_transform.translation.x, //anchor center, should be side
                 weapon_transform.translation.y,
             ),
             width,
             height,
         );
+
+        let (_, angle) = weapon_transform.rotation.to_axis_angle();
+        let rotation = weapon_transform.rotation;
+        let asin = rotation.z;
+        let true_angle = if asin < 0. { angle } else { -angle };
+        weapon_rectangle.rotate(-true_angle);
+        weapon_rectangle.set_position((
+            weapon_transform.translation.x - 35. * f32::cos(true_angle),
+            weapon_transform.translation.y + 35. * f32::sin(true_angle),
+        ));
 
         for (entity, transform, shape, maybe_is_hit) in collidables.iter() {
             let (x_delta, y_delta): (f32, f32) = match shape {
