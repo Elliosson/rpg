@@ -1,4 +1,4 @@
-use crate::components::*;
+use crate::{components::*, utils::correct_angle};
 use bevy::prelude::*;
 
 pub fn weapon_movement(
@@ -9,12 +9,8 @@ pub fn weapon_movement(
     let player_transform = player.single();
 
     let player_radius: f32 = 60.;
-    let (_, angle) = player_transform.rotation.to_axis_angle();
-    let rotation = player_transform.rotation;
 
-    let asin = rotation.z;
-
-    let true_angle = if asin < 0. { angle } else { -angle };
+    let true_angle = correct_angle(player_transform.rotation);
 
     let left_hand_angle = true_angle - 1.;
 

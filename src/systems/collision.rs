@@ -1,4 +1,4 @@
-use crate::components::*;
+use crate::{components::*, utils::correct_angle};
 use bevy::prelude::*;
 use sepax2d::Rotate;
 
@@ -41,10 +41,8 @@ pub fn collison(
                     *width,
                     *height,
                 );
-                let (_, angle) = transform.rotation.to_axis_angle();
-                let rotation = transform.rotation;
-                let asin = rotation.z;
-                let true_angle = if asin < 0. { angle } else { -angle };
+
+                let true_angle = correct_angle(transform.rotation);
 
                 object.rotate(true_angle);
                 let col = sepax2d::prelude::sat_collision(&object, &character_circle);

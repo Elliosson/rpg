@@ -7,6 +7,7 @@ mod components;
 pub use components::*;
 mod systems;
 pub use systems::*;
+mod utils;
 
 const PLAYER_SPEED: f32 = 200.0;
 

@@ -1,4 +1,4 @@
-use crate::components::*;
+use crate::{components::*, utils::correct_angle};
 use bevy::{prelude::*, time::Stopwatch};
 use sepax2d::{Rotate, Shape};
 
@@ -47,10 +47,7 @@ pub fn weapon_hit(
             height,
         );
 
-        let (_, angle) = weapon_transform.rotation.to_axis_angle();
-        let rotation = weapon_transform.rotation;
-        let asin = rotation.z;
-        let true_angle = if asin < 0. { angle } else { -angle };
+        let true_angle = correct_angle(weapon_transform.rotation);
         weapon_rectangle.rotate(-true_angle);
         weapon_rectangle.set_position((
             weapon_transform.translation.x - 35. * f32::cos(true_angle),
