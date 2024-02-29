@@ -20,3 +20,5 @@ mod draw_life;
 pub use draw_life::*;
 mod remove_life;
 pub use remove_life::*;
+mod death;
+pub use death::*;

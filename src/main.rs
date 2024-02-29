@@ -30,6 +30,7 @@ fn main() {
                 is_hit_animation,
                 remove_life,
                 draw_life,
+                death,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
