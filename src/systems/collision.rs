@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use sepax2d::{Rotate, Shape};
 
 pub fn get_shape(transform: &Transform, shape: &Sepax2dShape) -> Box<dyn Shape> {
-    let (x_delta, y_delta): (f32, f32) = match shape {
+    match shape {
         Sepax2dShape::Circle(radius) => {
             let object = sepax2d::prelude::Circle::new(
                 (transform.translation.x, transform.translation.y),
