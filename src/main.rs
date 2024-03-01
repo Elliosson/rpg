@@ -50,21 +50,36 @@ fn setup(
     // Camera
     commands.spawn((Camera2dBundle::default(), MainCamera));
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform {
-                translation: Vec3::new(0.0, 0.0, 0.0),
+    let player_entity = commands
+        .spawn((
+            SpriteBundle {
+                transform: Transform {
+                    translation: Vec3::new(0.0, 0.0, 0.0),
+                    ..default()
+                },
+                texture: asset_server.load("character.png"),
                 ..default()
             },
-            texture: asset_server.load("character.png"),
+            Player,
+            Collision,
+            Sepax2dShape::Circle(26.),
+            DeltaAngle { delta: 0. },
+            Mobile,
+            Weight { weight: 1000 },
+            Lifepoint { life: 100. },
+        ))
+        .id();
+
+    commands.spawn((
+        MaterialMesh2dBundle {
+            mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
+            material: materials.add(ColorMaterial::default()),
+            transform: Transform::from_xyz(0.0, 0.0, 0.0),
             ..default()
         },
-        Player,
-        Collision,
-        Sepax2dShape::Circle(26.),
-        DeltaAngle { delta: 0. },
-        Mobile,
-        Weight { weight: 1000 },
+        LifeBar {
+            linked_entity: player_entity,
+        },
     ));
 
     commands.spawn((
