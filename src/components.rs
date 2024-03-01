@@ -80,8 +80,13 @@ pub struct Weight {
 
 pub struct Target {
     pub entity: Entity,
+    pub direction: f32,
 }
 
 #[derive(Component)]
 
 pub struct ContactAttack;
+
+#[derive(Component)]
+
+pub struct Monster;

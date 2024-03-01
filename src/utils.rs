@@ -1,3 +1,5 @@
+use std::f32::consts::FRAC_PI_2;
+
 use bevy::prelude::{Quat, Transform};
 use sepax2d::{Rotate, Shape};
 
@@ -40,4 +42,16 @@ pub fn get_shape(transform: &Transform, shape: &Sepax2dShape) -> Box<dyn Shape> 
             return Box::new(object);
         }
     };
+}
+
+pub fn distance(t1: &Transform, t2: &Transform) -> f32 {
+    let dx = t2.translation.x - t1.translation.x;
+    let dy = t2.translation.y - t1.translation.y;
+    return (dx.powf(2.) + dy.powf(2.)).sqrt();
+}
+
+pub fn direction(current: &Transform, target: &Transform) -> f32 {
+    let diff = target.translation - current.translation;
+    let angle = diff.y.atan2(diff.x) - FRAC_PI_2;
+    return angle;
 }

@@ -21,6 +21,7 @@ fn main() {
             FixedUpdate,
             (
                 move_player,
+                monster_find_target,
                 move_slim,
                 camera_on_player,
                 contact_attack,
@@ -114,9 +115,7 @@ fn setup(
             Lifepoint { life: 100. },
             Mobile,
             Weight { weight: 2000 },
-            Target {
-                entity: player_entity,
-            },
+            Monster,
             ContactAttack,
         ))
         .id();
