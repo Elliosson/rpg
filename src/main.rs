@@ -63,6 +63,8 @@ fn setup(
         Collision,
         Sepax2dShape::Circle(26.),
         DeltaAngle { delta: 0. },
+        Mobile,
+        Weight { weight: 1000 },
     ));
 
     commands.spawn((
@@ -77,6 +79,7 @@ fn setup(
         Tree,
         Collision,
         Sepax2dShape::Circle(56.),
+        Imobile,
     ));
 
     let slim_entity = commands
@@ -93,6 +96,8 @@ fn setup(
             Collision,
             Sepax2dShape::Circle(52.),
             Lifepoint { life: 100. },
+            Mobile,
+            Weight { weight: 2000 },
         ))
         .id();
 
@@ -130,6 +135,7 @@ fn setup(
         Rock,
         Collision,
         Sepax2dShape::Circle(162.),
+        Imobile,
     ));
 
     commands.spawn((

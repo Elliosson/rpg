@@ -61,3 +61,17 @@ pub struct LifeBar {
 
 #[derive(Component)]
 pub struct IsHit;
+
+#[derive(Component)]
+
+pub struct Imobile;
+
+#[derive(Component)]
+
+pub struct Mobile;
+
+#[derive(Component)]
+
+pub struct Weight {
+    pub weight: i32,
+}

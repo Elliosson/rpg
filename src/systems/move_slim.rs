@@ -14,7 +14,6 @@ pub fn move_slim(mut slims: Query<(&mut Transform, &Slim)>) {
         }
 
         //2.  move forward.
-
         transform.translation.x += angle.sin() * 1.;
         transform.translation.y += angle.cos() * 1.;
     }
