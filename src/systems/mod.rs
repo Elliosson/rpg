@@ -24,3 +24,5 @@ mod death;
 pub use death::*;
 mod move_slim;
 pub use move_slim::*;
+mod contact_attack;
+pub use contact_attack::*;

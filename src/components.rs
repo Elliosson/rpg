@@ -75,3 +75,13 @@ pub struct Mobile;
 pub struct Weight {
     pub weight: i32,
 }
+
+#[derive(Component)]
+
+pub struct Target {
+    pub entity: Entity,
+}
+
+#[derive(Component)]
+
+pub struct ContactAttack;

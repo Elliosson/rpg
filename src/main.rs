@@ -23,6 +23,7 @@ fn main() {
                 move_player,
                 move_slim,
                 camera_on_player,
+                contact_attack,
                 collison,
                 rotate_player,
                 weapon_movement,
@@ -113,6 +114,10 @@ fn setup(
             Lifepoint { life: 100. },
             Mobile,
             Weight { weight: 2000 },
+            Target {
+                entity: player_entity,
+            },
+            ContactAttack,
         ))
         .id();
 
