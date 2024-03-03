@@ -6,8 +6,13 @@ use bevy::{
 mod components;
 pub use components::*;
 mod systems;
+use raws::{load_raws, spawn_named_entity, RawMaster, RAWS};
 pub use systems::*;
+mod raws;
 mod utils;
+
+#[macro_use]
+extern crate lazy_static;
 
 const PLAYER_SPEED: f32 = 200.0;
 
@@ -50,7 +55,7 @@ fn setup(
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
     // Camera
-    commands.spawn((Camera2dBundle::default(), MainCamera));
+    commands.spawn((Camera2dBundle::default(), MainCamera {}));
 
     let player_entity = commands
         .spawn((
@@ -62,11 +67,11 @@ fn setup(
                 texture: asset_server.load("character.png"),
                 ..default()
             },
-            Player,
-            Collision,
+            Player {},
+            Collision {},
             Sepax2dShape::Circle(26.),
             DeltaAngle { delta: 0. },
-            Mobile,
+            Mobile {},
             Weight { weight: 1000 },
             Lifepoint { life: 100. },
         ))
@@ -93,10 +98,10 @@ fn setup(
             texture: asset_server.load("tree.png"),
             ..default()
         },
-        Tree,
-        Collision,
+        Tree {},
+        Collision {},
         Sepax2dShape::Circle(56.),
-        Imobile,
+        Imobile {},
     ));
 
     let slim_entity = commands
@@ -109,14 +114,14 @@ fn setup(
                 texture: asset_server.load("slim.png"),
                 ..default()
             },
-            Slim,
-            Collision,
+            Slim {},
+            Collision {},
             Sepax2dShape::Circle(52.),
             Lifepoint { life: 100. },
-            Mobile,
+            Mobile {},
             Weight { weight: 2000 },
-            Monster,
-            ContactAttack,
+            Monster {},
+            ContactAttack {},
         ))
         .id();
 
@@ -138,7 +143,7 @@ fn setup(
             texture: asset_server.load("hammer.png"),
             ..default()
         },
-        EquipedWeapon,
+        EquipedWeapon {},
         Sepax2dShape::Rectangle(70., 4.),
     ));
 
@@ -151,10 +156,10 @@ fn setup(
             texture: asset_server.load("rock.png"),
             ..default()
         },
-        Rock,
-        Collision,
+        Rock {},
+        Collision {},
         Sepax2dShape::Circle(162.),
-        Imobile,
+        Imobile {},
     ));
 
     commands.spawn((
@@ -168,11 +173,18 @@ fn setup(
 
             ..default()
         },
-        MapBackground,
+        MapBackground {},
     ));
 
-    let character_circle: sepax2d::prelude::Circle = sepax2d::prelude::Circle::new((0., 0.), 1.);
-    let tree_circle: sepax2d::prelude::Circle = sepax2d::prelude::Circle::new((0., 0.), 2.);
-
-    sepax2d::prelude::sat_collision(&character_circle, &tree_circle);
+    load_raws();
+    let raws: &RawMaster = &RAWS.lock().unwrap();
+    spawn_named_entity(
+        commands,
+        asset_server,
+        meshes,
+        materials,
+        (500., 500.),
+        "slim".to_string(),
+        raws,
+    );
 }

@@ -1,0 +1,22 @@
+{
+    "props": [
+        {
+            "name": "slim",
+            "image": "slim.png",
+            "slim": {},
+            "collision": {},
+            "shape": {
+                "Circle": 52.0
+            },
+            "life": {
+                "life": 100.0
+            },
+            "mobile": {},
+            "weight": {
+                "weight": 2000
+            },
+            "monster": {},
+            "contact_attack": {}
+        }
+    ]
+}

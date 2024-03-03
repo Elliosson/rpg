@@ -1,47 +1,50 @@
 use bevy::prelude::*;
 use bevy::time::Stopwatch;
+use serde::Deserialize;
 
-#[derive(Component)]
-pub struct Player;
+//todo use sparse set for the component often add/remove
 
-#[derive(Component)]
-pub struct Tree;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Player {}
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Tree {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
 pub enum Sepax2dShape {
     Circle(f32),
     Rectangle(f32, f32),
 }
 
-#[derive(Component)]
-pub struct Collision;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Collision {}
 
-#[derive(Component)]
-pub struct Slim;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Slim {}
 
-#[derive(Component)]
-pub struct Rock;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Rock {}
 
-#[derive(Component)]
-pub struct MainCamera;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct MainCamera {}
 
-#[derive(Component)]
-pub struct EquipedWeapon;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct EquipedWeapon {}
 
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct IsAttacking {
     pub start_time: Stopwatch,
 }
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct DeltaAngle {
     pub delta: f32,
 }
 
-#[derive(Component)]
-pub struct MapBackground;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct MapBackground {}
 
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct IsHitAnimation {
     pub dx: f32,
     pub dy: f32,
@@ -49,44 +52,49 @@ pub struct IsHitAnimation {
     pub already_moved: bool,
 }
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct Lifepoint {
     pub life: f32,
 }
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct LifeBar {
     pub linked_entity: Entity,
 }
 
-#[derive(Component)]
-pub struct IsHit;
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct IsHit {}
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
-pub struct Imobile;
+pub struct Imobile {}
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
-pub struct Mobile;
+pub struct Mobile {}
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
 pub struct Weight {
     pub weight: i32,
 }
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
 pub struct Target {
     pub entity: Entity,
     pub direction: f32,
 }
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
-pub struct ContactAttack;
+pub struct ContactAttack {}
 
-#[derive(Component)]
+#[derive(Component, Deserialize, Debug, Clone)]
 
-pub struct Monster;
+pub struct Monster {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct PropName {
+    pub name: String,
+}

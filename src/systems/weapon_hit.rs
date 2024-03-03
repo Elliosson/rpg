@@ -85,7 +85,7 @@ pub fn weapon_hit(
                     });
                 }
 
-                commands.entity(entity).insert(IsHit);
+                commands.entity(entity).insert(IsHit {});
 
                 //put a isHit component to the hitted object
                 // add a system to make the object react to it like move a little in the oposite directin.
