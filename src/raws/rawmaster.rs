@@ -55,10 +55,10 @@ impl RawMaster {
 }
 
 pub fn spawn_props(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
+    commands: &mut Commands,
+    asset_server: &Res<AssetServer>,
+    meshes: &mut ResMut<Assets<Mesh>>,
+    materials: &mut ResMut<Assets<ColorMaterial>>,
     pos: (f32, f32),
     template: &Template,
 ) -> Entity {
@@ -122,10 +122,10 @@ pub fn spawn_props(
 }
 
 pub fn spawn_named_entity(
-    commands: Commands,
-    asset_server: Res<AssetServer>,
-    meshes: ResMut<Assets<Mesh>>,
-    materials: ResMut<Assets<ColorMaterial>>,
+    commands: &mut Commands,
+    asset_server: &Res<AssetServer>,
+    meshes: &mut ResMut<Assets<Mesh>>,
+    materials: &mut ResMut<Assets<ColorMaterial>>,
     pos: (f32, f32),
     name: String,
     raws: &RawMaster,

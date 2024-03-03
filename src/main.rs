@@ -104,39 +104,6 @@ fn setup(
         Imobile {},
     ));
 
-    let slim_entity = commands
-        .spawn((
-            SpriteBundle {
-                transform: Transform {
-                    translation: Vec3::new(-200.0, -200.0, 0.0),
-                    ..default()
-                },
-                texture: asset_server.load("slim.png"),
-                ..default()
-            },
-            Slim {},
-            Collision {},
-            Sepax2dShape::Circle(52.),
-            Lifepoint { life: 100. },
-            Mobile {},
-            Weight { weight: 2000 },
-            Monster {},
-            ContactAttack {},
-        ))
-        .id();
-
-    commands.spawn((
-        MaterialMesh2dBundle {
-            mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
-            material: materials.add(ColorMaterial::default()),
-            transform: Transform::from_xyz(0.0, 0.0, 0.0),
-            ..default()
-        },
-        LifeBar {
-            linked_entity: slim_entity,
-        },
-    ));
-
     commands.spawn((
         SpriteBundle {
             transform: Transform { ..default() },
@@ -179,11 +146,41 @@ fn setup(
     load_raws();
     let raws: &RawMaster = &RAWS.lock().unwrap();
     spawn_named_entity(
-        commands,
-        asset_server,
-        meshes,
-        materials,
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
         (500., 500.),
+        "slim".to_string(),
+        raws,
+    );
+
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (600., 500.),
+        "slim".to_string(),
+        raws,
+    );
+
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (500., 600.),
+        "slim".to_string(),
+        raws,
+    );
+
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (-200., -200.),
         "slim".to_string(),
         raws,
     );
