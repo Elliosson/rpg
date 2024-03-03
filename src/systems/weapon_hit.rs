@@ -5,7 +5,7 @@ use sepax2d::{Rotate, Shape};
 pub fn weapon_hit(
     mut commands: Commands,
     mut player: Query<
-        (&mut Transform, &Sepax2dShape),
+        Entity,
         (
             With<Player>,
             With<Sepax2dShape>,
@@ -28,7 +28,7 @@ pub fn weapon_hit(
     >,
 ) {
     //if the player is attacking
-    if let Ok(_) = player.get_single_mut() {
+    if let Ok(player_entity) = player.get_single_mut() {
         let (weapon_transform, weapon_shape) = equipped_weapon.single();
 
         let (width, height) = if let Sepax2dShape::Rectangle(width, height) = weapon_shape {
@@ -86,6 +86,9 @@ pub fn weapon_hit(
                 }
 
                 commands.entity(entity).insert(IsHit {});
+                commands.entity(entity).insert(LastHitBy {
+                    entity: player_entity,
+                });
 
                 //put a isHit component to the hitted object
                 // add a system to make the object react to it like move a little in the oposite directin.

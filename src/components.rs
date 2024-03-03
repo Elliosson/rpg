@@ -98,3 +98,14 @@ pub struct Monster {}
 pub struct PropName {
     pub name: String,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Level {
+    pub xp: f32,
+    pub level: i32,
+}
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct LastHitBy {
+    pub entity: Entity,
+}
