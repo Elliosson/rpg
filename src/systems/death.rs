@@ -3,7 +3,7 @@ use bevy::{prelude::*, utils::HashMap};
 
 pub fn death(
     mut commands: Commands,
-    creatures: Query<(Entity, &Lifepoint, Option<&LastHitBy>, Option<&mut Level>)>,
+    mut creatures: Query<(Entity, &Lifepoint, Option<&LastHitBy>, Option<&mut Level>)>,
 ) {
     let mut entity_to_xp: HashMap<Entity, f32> = HashMap::new();
     for (entity, lifepoint, maybe_last_hit_by, _) in creatures.iter() {
@@ -17,6 +17,13 @@ pub fn death(
                 let value = entity_to_xp.entry(last_hit_by.entity).or_default();
                 *value += 10.;
             }
+        }
+    }
+
+    for (key, val) in entity_to_xp.iter() {
+        let (_, _, _, maybe_level) = creatures.get_mut(*key).unwrap();
+        if let Some(mut level) = maybe_level {
+            level.xp += val;
         }
     }
 }
