@@ -109,3 +109,6 @@ pub struct Level {
 pub struct LastHitBy {
     pub entity: Entity,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct LevelText {}

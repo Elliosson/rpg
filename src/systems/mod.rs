@@ -28,3 +28,5 @@ mod contact_attack;
 pub use contact_attack::*;
 mod monster_find_target;
 pub use monster_find_target::*;
+mod update_level_text;
+pub use update_level_text::*;

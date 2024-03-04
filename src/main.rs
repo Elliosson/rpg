@@ -39,6 +39,7 @@ fn main() {
                 remove_life,
                 draw_life,
                 death,
+                update_level_text,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
@@ -74,6 +75,7 @@ fn setup(
             Mobile {},
             Weight { weight: 1000 },
             Lifepoint { life: 100. },
+            Level { level: 1, xp: 0. },
         ))
         .id();
 
@@ -142,6 +144,45 @@ fn setup(
         },
         MapBackground {},
     ));
+
+    commands
+        .spawn(NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                align_items: AlignItems::FlexEnd,
+                justify_content: JustifyContent::Center,
+                ..default()
+            },
+            ..default()
+        })
+        .with_children(|parent| {
+            parent.spawn((
+                // Create a TextBundle that has a Text with a single section.
+                TextBundle::from_section(
+                    // Accepts a `String` or any type that converts into a `String`, such as `&str`
+                    "",
+                    TextStyle {
+                        // This font is loaded and will be used instead of the default font.
+                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                        font_size: 40.0,
+                        ..default()
+                    },
+                ) // Set the justification of the Text
+                .with_text_justify(JustifyText::Center)
+                // Set the style of the TextBundle itself.
+                .with_style(Style {
+                    height: Val::Px(65.0),
+                    border: UiRect::all(Val::Px(5.0)),
+                    // horizontally center child text
+                    justify_content: JustifyContent::Center,
+                    // vertically center child text
+                    align_items: AlignItems::Center,
+                    ..default()
+                }),
+                LevelText {},
+            ));
+        });
 
     load_raws();
     let raws: &RawMaster = &RAWS.lock().unwrap();
