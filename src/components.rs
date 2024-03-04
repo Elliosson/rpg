@@ -112,3 +112,8 @@ pub struct LastHitBy {
 
 #[derive(Component, Deserialize, Debug, Clone)]
 pub struct LevelText {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct SlotButton {
+    pub id: i32,
+}
