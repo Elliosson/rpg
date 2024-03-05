@@ -1,15 +1,28 @@
 use crate::components::*;
+use crate::inventory_ui;
 use crate::PLAYER_SPEED;
 use bevy::prelude::*;
 
 pub fn move_player(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut query: Query<&mut Transform, With<Player>>,
+    mut next_inventory_state: ResMut<NextState<InventoryUiState>>,
+    inventory_state: Res<State<InventoryUiState>>,
+
     time: Res<Time>,
 ) {
     let mut player_transform = query.single_mut();
     let mut direction_x = 0.0;
     let mut direction_y = 0.0;
+
+    //todo rename the system in player input. and do a separated movement system.
+    if keyboard_input.pressed(KeyCode::KeyI) {
+        if *inventory_state.get() == InventoryUiState::Closed {
+            next_inventory_state.set(InventoryUiState::Open);
+        } else {
+            next_inventory_state.set(InventoryUiState::Closed);
+        }
+    }
 
     if keyboard_input.pressed(KeyCode::ArrowLeft) || keyboard_input.pressed(KeyCode::KeyA) {
         direction_x -= 1.0;

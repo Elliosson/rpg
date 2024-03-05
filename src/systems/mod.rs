@@ -30,3 +30,5 @@ mod monster_find_target;
 pub use monster_find_target::*;
 mod update_level_text;
 pub use update_level_text::*;
+mod inventory_ui;
+pub use inventory_ui::*;
