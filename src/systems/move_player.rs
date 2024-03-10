@@ -16,7 +16,7 @@ pub fn move_player(
     let mut direction_y = 0.0;
 
     //todo rename the system in player input. and do a separated movement system.
-    if keyboard_input.pressed(KeyCode::KeyI) {
+    if keyboard_input.just_pressed(KeyCode::KeyI) {
         if *inventory_state.get() == InventoryUiState::Closed {
             next_inventory_state.set(InventoryUiState::Open);
         } else {
