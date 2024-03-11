@@ -32,3 +32,5 @@ mod update_level_text;
 pub use update_level_text::*;
 mod inventory_ui;
 pub use inventory_ui::*;
+mod item_slot_button;
+pub use item_slot_button::*;

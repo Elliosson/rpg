@@ -1,9 +1,56 @@
 pub use crate::components::*;
 use bevy::prelude::*;
 
-pub fn spawn_ui(commands: &mut Commands, asset_server: &Res<AssetServer>) {
-    let texture_handle = asset_server.load("slot.png");
+pub fn slot_button(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, id: i32) {
+    let texture_handle = asset_server.load("mana_potion.png");
 
+    parent
+        .spawn(NodeBundle {
+            style: Style {
+                width: Val::Px(65.0),
+                height: Val::Px(85.0),
+                margin: UiRect::all(Val::Px(4.0)),
+                flex_direction: FlexDirection::Column,
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                ..default()
+            },
+            ..default()
+        })
+        .with_children(|parent| {
+            //this will remove the color of the image if in front of an image
+            parent.spawn(TextBundle::from_section(
+                format!("{}", id),
+                TextStyle {
+                    font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                    font_size: 14.0,
+                    color: Color::rgba(0.9, 0.9, 0.9, 0.9),
+                },
+            ));
+            parent.spawn((
+                ButtonBundle {
+                    style: Style {
+                        margin: UiRect::all(Val::Px(4.0)),
+                        width: Val::Px(65.0),
+                        height: Val::Px(65.0),
+                        // border: UiRect::all(Val::Px(5.0)),
+                        // horizontally center child text
+                        justify_content: JustifyContent::Center,
+                        // vertically center child text
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    image: UiImage::new(texture_handle.clone()),
+                    border_color: BorderColor(Color::BLACK),
+                    background_color: BackgroundColor(Color::WHITE),
+                    ..default()
+                },
+                SlotButton { id },
+            ));
+        });
+}
+
+pub fn spawn_ui(commands: &mut Commands, asset_server: &Res<AssetServer>) {
     commands
         .spawn(NodeBundle {
             style: Style {
@@ -46,7 +93,7 @@ pub fn spawn_ui(commands: &mut Commands, asset_server: &Res<AssetServer>) {
                 .spawn(NodeBundle {
                     style: Style {
                         width: Val::Percent(100.0),
-                        height: Val::Px(65.0),
+                        height: Val::Px(85.0),
                         flex_direction: FlexDirection::Row,
                         align_items: AlignItems::FlexEnd,
                         justify_content: JustifyContent::Center,
@@ -56,36 +103,7 @@ pub fn spawn_ui(commands: &mut Commands, asset_server: &Res<AssetServer>) {
                 })
                 .with_children(|parent| {
                     for i in 1..6 {
-                        parent
-                            .spawn((
-                                ButtonBundle {
-                                    style: Style {
-                                        margin: UiRect::all(Val::Px(4.0)),
-                                        width: Val::Px(65.0),
-                                        height: Val::Px(65.0),
-                                        border: UiRect::all(Val::Px(5.0)),
-                                        // horizontally center child text
-                                        justify_content: JustifyContent::Center,
-                                        // vertically center child text
-                                        align_items: AlignItems::Center,
-                                        ..default()
-                                    },
-                                    image: UiImage::new(texture_handle.clone()),
-                                    border_color: BorderColor(Color::BLACK),
-                                    ..default()
-                                },
-                                SlotButton { id: i },
-                            ))
-                            .with_children(|parent| {
-                                parent.spawn(TextBundle::from_section(
-                                    format!("{}", i),
-                                    TextStyle {
-                                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
-                                        font_size: 40.0,
-                                        color: Color::rgb(0.9, 0.9, 0.9),
-                                    },
-                                ));
-                            });
+                        slot_button(parent, asset_server, i);
                     }
                 });
         });

@@ -53,7 +53,14 @@ fn main() {
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
-        .add_systems(Update, (bevy::window::close_on_esc, mouse_button_input))
+        .add_systems(
+            Update,
+            (
+                bevy::window::close_on_esc,
+                mouse_button_input,
+                item_slot_button,
+            ),
+        )
         .init_state::<InventoryUiState>()
         .add_systems(OnEnter(InventoryUiState::Open), inventory_ui)
         .add_systems(
