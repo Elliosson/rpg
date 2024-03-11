@@ -34,3 +34,5 @@ mod inventory_ui;
 pub use inventory_ui::*;
 mod item_slot_button;
 pub use item_slot_button::*;
+mod inventory_button;
+pub use inventory_button::*;

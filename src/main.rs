@@ -59,6 +59,7 @@ fn main() {
                 bevy::window::close_on_esc,
                 mouse_button_input,
                 item_slot_button,
+                inventory_button,
             ),
         )
         .init_state::<InventoryUiState>()
