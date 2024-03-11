@@ -2,7 +2,13 @@ pub use crate::components::*;
 use bevy::prelude::*;
 
 pub fn slot_button(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, id: i32) {
-    let texture_handle = asset_server.load("mana_potion.png");
+    let texture_handle: Handle<Image> = if id == 1 {
+        asset_server.load("hammer_icon.png")
+    } else if id == 2 {
+        asset_server.load("sword_icon.png")
+    } else {
+        asset_server.load("mana_potion_icon.png")
+    };
 
     parent
         .spawn(NodeBundle {
@@ -33,7 +39,7 @@ pub fn slot_button(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, i
                         margin: UiRect::all(Val::Px(4.0)),
                         width: Val::Px(65.0),
                         height: Val::Px(65.0),
-                        // border: UiRect::all(Val::Px(5.0)),
+                        border: UiRect::all(Val::Px(2.0)),
                         // horizontally center child text
                         justify_content: JustifyContent::Center,
                         // vertically center child text
@@ -42,7 +48,7 @@ pub fn slot_button(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, i
                     },
                     image: UiImage::new(texture_handle.clone()),
                     border_color: BorderColor(Color::BLACK),
-                    background_color: BackgroundColor(Color::WHITE),
+                    // background_color: BackgroundColor(Color::WHITE),
                     ..default()
                 },
                 SlotButton { id },
