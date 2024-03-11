@@ -26,7 +26,10 @@ pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>
                 border_color: BorderColor(Color::BLACK),
                 ..default()
             },
-            InventorySlot { id },
+            InventorySlot {
+                id,
+                previous_interaction: Interaction::None,
+            },
         ))
         .with_children(|parent| {
             parent.spawn(TextBundle::from_section(

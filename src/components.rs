@@ -118,9 +118,10 @@ pub struct SlotButton {
     pub id: i32,
 }
 
-#[derive(Component, Deserialize, Debug, Clone)]
+#[derive(Component, Debug, Clone)]
 pub struct InventorySlot {
     pub id: i32,
+    pub previous_interaction: Interaction,
 }
 
 #[derive(Component, Deserialize, Debug, Clone)]
@@ -131,4 +132,21 @@ pub enum InventoryUiState {
     #[default]
     Closed,
     Open,
+}
+
+#[derive(Resource, Deserialize, Debug, Clone)]
+
+pub struct ButtonPressed {
+    pub entity: Option<Entity>,
+}
+
+#[derive(Resource, Deserialize, Debug, Clone)]
+
+pub struct ButtonHovered {
+    pub entity: Option<Entity>,
+}
+
+#[derive(Resource, Deserialize, Debug, Clone)]
+pub struct ButtonJustReleased {
+    pub entity: Option<Entity>,
 }

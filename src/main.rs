@@ -68,6 +68,9 @@ fn main() {
             OnExit(InventoryUiState::Open),
             despawn_screen::<InventoryScreen>,
         )
+        .insert_resource(ButtonHovered { entity: None })
+        .insert_resource(ButtonPressed { entity: None })
+        .insert_resource(ButtonJustReleased { entity: None })
         .run();
 }
 
@@ -207,7 +210,7 @@ fn setup(
         &asset_server,
         &mut meshes,
         &mut materials,
-        (-200., -200.),
+        (-300., -300.),
         "slim".to_string(),
         raws,
     );
