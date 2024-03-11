@@ -1,5 +1,9 @@
 use crate::components::*;
-use bevy::{prelude::*, utils::HashMap};
+use bevy::prelude::*;
+
+const INVENTORY_WIDTH: i32 = 5;
+const INVENTORY_HEIGHT: i32 = 5;
+const CELL_SIZE: f32 = 64.;
 
 pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, id: i32) {
     let texture_handle = asset_server.load("slot.png");
@@ -9,8 +13,8 @@ pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>
             ButtonBundle {
                 style: Style {
                     margin: UiRect::all(Val::Px(1.0)),
-                    width: Val::Px(32.0),
-                    height: Val::Px(32.0),
+                    width: Val::Px(CELL_SIZE),
+                    height: Val::Px(CELL_SIZE),
                     border: UiRect::all(Val::Px(1.0)),
                     // horizontally center child text
                     justify_content: JustifyContent::Center,
@@ -36,11 +40,7 @@ pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>
         });
 }
 
-pub fn inventory_ui(
-    mut commands: Commands,
-    inventory_ui: Res<InventoryUi>,
-    asset_server: Res<AssetServer>,
-) {
+pub fn inventory_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands
         .spawn((
             NodeBundle {
@@ -60,13 +60,13 @@ pub fn inventory_ui(
             InventoryScreen,
         ))
         .with_children(|parent| {
-            for y in 0..10 {
+            for y in 0..INVENTORY_HEIGHT {
                 parent
                     .spawn(NodeBundle {
                         style: Style {
-                            margin: UiRect::all(Val::Px(2.0)),
+                            margin: UiRect::all(Val::Px(1.0)),
                             width: Val::Percent(100.0),
-                            height: Val::Px(32.0),
+                            height: Val::Px(CELL_SIZE),
                             flex_direction: FlexDirection::Row,
                             align_items: AlignItems::Center,
                             justify_content: JustifyContent::Center,
@@ -75,8 +75,8 @@ pub fn inventory_ui(
                         ..default()
                     })
                     .with_children(|parent| {
-                        for x in 0..10 {
-                            inventory_slot(parent, &asset_server, y * 10 + x);
+                        for x in 0..INVENTORY_WIDTH {
+                            inventory_slot(parent, &asset_server, y * INVENTORY_WIDTH + x);
                         }
                     });
             }

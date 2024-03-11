@@ -1,5 +1,4 @@
 use crate::components::*;
-use crate::inventory_ui;
 use crate::PLAYER_SPEED;
 use bevy::prelude::*;
 

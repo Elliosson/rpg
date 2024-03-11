@@ -118,10 +118,6 @@ pub struct SlotButton {
     pub id: i32,
 }
 
-#[derive(Resource, Deserialize, Debug, Clone)]
-pub struct InventoryUi {
-    pub open: bool,
-}
 #[derive(Component, Deserialize, Debug, Clone)]
 pub struct InventorySlot {
     pub id: i32,
