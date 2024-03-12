@@ -17,6 +17,37 @@
             },
             "monster": {},
             "contact_attack": {}
+        },
+        {
+            "name": "rock",
+            "image": "rock.png",
+            "rock": {},
+            "collision": {},
+            "shape": {
+                "Circle": 162.0
+            },
+            "imobile": {}
+        },
+        {
+            "name": "hammer",
+            "image": "hammer.png",
+            "shape": {
+                "Rectangle": [
+                    70.0,
+                    4.0
+                ]
+            },
+            "equiped_weapon": {}
+        },
+        {
+            "name": "tree",
+            "image": "tree.png",
+            "shape": {
+                "Circle": 56.0
+            },
+            "tree": {},
+            "imobile": {},
+            "collision": {}
         }
     ]
 }

@@ -82,6 +82,9 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
+    load_raws();
+    let raws: &RawMaster = &RAWS.lock().unwrap();
+
     // Camera
     commands.spawn((Camera2dBundle::default(), MainCamera {}));
 
@@ -118,45 +121,35 @@ fn setup(
         },
     ));
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform {
-                translation: Vec3::new(200.0, 200.0, 0.0),
-                ..default()
-            },
-            texture: asset_server.load("tree.png"),
-            ..default()
-        },
-        Tree {},
-        Collision {},
-        Sepax2dShape::Circle(56.),
-        Imobile {},
-    ));
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (200., 200.),
+        "tree".to_string(),
+        raws,
+    );
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform { ..default() },
-            texture: asset_server.load("hammer.png"),
-            ..default()
-        },
-        EquipedWeapon {},
-        Sepax2dShape::Rectangle(70., 4.),
-    ));
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "hammer".to_string(),
+        raws,
+    );
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform {
-                translation: Vec3::new(-200.0, 200.0, 0.0),
-                ..default()
-            },
-            texture: asset_server.load("rock.png"),
-            ..default()
-        },
-        Rock {},
-        Collision {},
-        Sepax2dShape::Circle(162.),
-        Imobile {},
-    ));
+    spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (-200., 200.),
+        "rock".to_string(),
+        raws,
+    );
 
     commands.spawn((
         SpriteBundle {
@@ -174,8 +167,6 @@ fn setup(
 
     spawn_ui(&mut commands, &asset_server);
 
-    load_raws();
-    let raws: &RawMaster = &RAWS.lock().unwrap();
     spawn_named_entity(
         &mut commands,
         &asset_server,

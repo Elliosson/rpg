@@ -22,6 +22,10 @@ pub struct Template {
     pub weight: Option<Weight>,
     pub monster: Option<Monster>,
     pub contact_attack: Option<ContactAttack>,
+    pub imobile: Option<Imobile>,
+    pub rock: Option<Rock>,
+    pub equiped_weapon: Option<EquipedWeapon>,
+    pub tree: Option<Tree>,
 }
 
 pub struct RawMaster {
@@ -115,6 +119,18 @@ pub fn spawn_props(
         commands.entity(entity).insert(comp.clone());
     }
     if let Some(comp) = &template.contact_attack {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.imobile {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.rock {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.equiped_weapon {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.tree {
         commands.entity(entity).insert(comp.clone());
     }
 

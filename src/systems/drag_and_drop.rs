@@ -5,7 +5,7 @@ pub fn drag_and_drop(
     mut commands: Commands,
     mut hovered: ResMut<ButtonHovered>,
     mut just_released: ResMut<ButtonJustReleased>,
-    mut button_query: Query<(Entity, &mut InventorySlot)>,
+    mut button_query: Query<(Entity, &mut InventorySlot, &mut UiImage)>,
 ) {
     if let Some(released_entity) = just_released.entity {
         if let Some(hovered_entity) = hovered.entity {
