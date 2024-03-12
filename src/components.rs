@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use bevy::prelude::*;
 use bevy::time::Stopwatch;
 use serde::Deserialize;
@@ -114,6 +116,9 @@ pub struct LastHitBy {
 pub struct LevelText {}
 
 #[derive(Component, Deserialize, Debug, Clone)]
+pub struct UniqueItem {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct SlotButton {
     pub id: i32,
 }
@@ -149,4 +154,15 @@ pub struct ButtonHovered {
 #[derive(Resource, Deserialize, Debug, Clone)]
 pub struct ButtonJustReleased {
     pub entity: Option<Entity>,
+}
+
+#[derive(Clone)]
+pub enum InventoryCase {
+    Stack(String, i32),
+    Unique(String, Entity),
+}
+
+#[derive(Resource, Clone)]
+pub struct Inventory {
+    pub slots: HashMap<i32, InventoryCase>,
 }

@@ -37,7 +37,8 @@
                     4.0
                 ]
             },
-            "equiped_weapon": {}
+            "equiped_weapon": {},
+            "unique_item": {}
         },
         {
             "name": "tree",
@@ -48,6 +49,17 @@
             "tree": {},
             "imobile": {},
             "collision": {}
+        },
+        {
+            "name": "sword",
+            "image": "sword.png",
+            "shape": {
+                "Rectangle": [
+                    70.0,
+                    4.0
+                ]
+            },
+            "unique_item": {}
         }
     ]
 }

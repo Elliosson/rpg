@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use bevy::{
     prelude::*,
     sprite::{MaterialMesh2dBundle, Mesh2dHandle},
@@ -50,6 +52,7 @@ fn main() {
                 death,
                 drag_and_drop,
                 update_level_text,
+                equipped_item,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
@@ -131,7 +134,7 @@ fn setup(
         raws,
     );
 
-    spawn_named_entity(
+    let hammer = spawn_named_entity(
         &mut commands,
         &asset_server,
         &mut meshes,
@@ -140,6 +143,29 @@ fn setup(
         "hammer".to_string(),
         raws,
     );
+
+    let sword = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "sword".to_string(),
+        raws,
+    );
+
+    commands.insert_resource(Inventory {
+        slots: [
+            (
+                1,
+                InventoryCase::Unique("hammer".to_string(), hammer.clone()),
+            ),
+            (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    });
 
     spawn_named_entity(
         &mut commands,
