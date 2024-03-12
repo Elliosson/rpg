@@ -53,6 +53,7 @@ fn main() {
                 drag_and_drop,
                 update_level_text,
                 equipped_item,
+                update_inventoty_ui,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),

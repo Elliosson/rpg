@@ -40,3 +40,5 @@ mod drag_and_drop;
 pub use drag_and_drop::*;
 mod equipped_item;
 pub use equipped_item::*;
+mod update_inventoty_ui;
+pub use update_inventoty_ui::*;
