@@ -48,6 +48,7 @@ fn main() {
                 remove_life,
                 draw_life,
                 death,
+                drag_and_drop,
                 update_level_text,
             )
                 // `chain`ing systems together runs them in order
