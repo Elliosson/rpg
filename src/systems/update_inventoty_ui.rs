@@ -29,6 +29,9 @@ pub fn update_inventoty_ui(
                 asset_server.load(format!("{}_icon.png", name.clone()));
 
             *ui_image = UiImage::new(texture_handle.clone());
+        } else {
+            let texture_handle: Handle<Image> = asset_server.load("slot.png");
+            *ui_image = UiImage::new(texture_handle.clone());
         }
     }
 }
