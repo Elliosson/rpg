@@ -166,3 +166,9 @@ pub enum InventoryCase {
 pub struct Inventory {
     pub slots: HashMap<i32, InventoryCase>,
 }
+
+//ensure the images stay loaded.
+#[derive(Resource, Clone)]
+pub struct StoreImageHandle {
+    pub images: HashMap<String, Handle<Image>>,
+}

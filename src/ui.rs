@@ -6,6 +6,8 @@ pub fn slot_button(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>, i
         asset_server.load("hammer_icon.png")
     } else if id == 2 {
         asset_server.load("sword_icon.png")
+    } else if id == 3 {
+        asset_server.load("lance_icon.png")
     } else {
         asset_server.load("mana_potion_icon.png")
     };

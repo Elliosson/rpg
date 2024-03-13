@@ -25,6 +25,9 @@ pub fn update_inventoty_ui(
                 InventoryCase::Stack(name, _) => name,
                 InventoryCase::Unique(name, _) => name,
             };
+
+            //todo, this is not working very well, if for some reason, the image is dropped, i can't reload it.
+            //it work only because the image stay loaded in the skill slots.
             let texture_handle: Handle<Image> =
                 asset_server.load(format!("{}_icon.png", name.clone()));
 

@@ -125,6 +125,23 @@ fn setup(
         },
     ));
 
+    commands.insert_resource(StoreImageHandle {
+        images: [
+            ("lance".to_string(), asset_server.load("lance_icon.png")),
+            (
+                "sword_icon".to_string(),
+                asset_server.load("sword_icon.png"),
+            ),
+            (
+                "hammer_icon".to_string(),
+                asset_server.load("hammer_icon.png"),
+            ),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    });
+
     spawn_named_entity(
         &mut commands,
         &asset_server,
@@ -155,6 +172,16 @@ fn setup(
         raws,
     );
 
+    let lance = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "lance".to_string(),
+        raws,
+    );
+
     commands.insert_resource(Inventory {
         slots: [
             (
@@ -162,6 +189,7 @@ fn setup(
                 InventoryCase::Unique("hammer".to_string(), hammer.clone()),
             ),
             (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
+            (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
         ]
         .iter()
         .cloned()
