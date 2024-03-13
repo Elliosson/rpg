@@ -1,11 +1,10 @@
 use crate::components::*;
-use bevy::{prelude::*, utils::HashMap};
+use bevy::prelude::*;
 
 pub fn drag_and_drop(
-    mut commands: Commands,
-    mut hovered: ResMut<ButtonHovered>,
+    hovered: Res<ButtonHovered>,
     mut just_released: ResMut<ButtonJustReleased>,
-    mut button_query: Query<(Entity, &mut InventorySlot, &mut UiImage)>,
+    button_query: Query<(Entity, &InventorySlot, &mut UiImage)>,
     mut inventory: ResMut<Inventory>,
 ) {
     if let Some(released_entity) = just_released.entity {

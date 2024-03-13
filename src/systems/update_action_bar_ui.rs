@@ -1,22 +1,12 @@
 use crate::components::*;
-use bevy::{prelude::*, utils::HashMap};
+use bevy::prelude::*;
 
 pub fn update_action_bar_ui(
-    mut commands: Commands,
-    mut buttons: Query<
-        (
-            Entity,
-            &Interaction,
-            &mut BorderColor,
-            &mut UiImage,
-            &mut SlotButton,
-        ),
-        With<Button>,
-    >,
+    mut buttons: Query<(&mut UiImage, &SlotButton), With<Button>>,
     inventoy: Res<Inventory>,
     asset_server: Res<AssetServer>,
 ) {
-    for (entity, interaction, mut border_color, mut ui_image, mut slot) in &mut buttons {
+    for (mut ui_image, slot) in &mut buttons {
         if let Some(slot) = inventoy.slots.get(&slot.id) {
             let name = match slot {
                 InventoryCase::Stack(name, _) => name,

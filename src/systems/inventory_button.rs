@@ -2,7 +2,6 @@ use crate::components::*;
 use bevy::prelude::*;
 
 pub fn inventory_button(
-    asset_server: Res<AssetServer>,
     mut interaction_query: Query<
         (
             Entity,
@@ -19,8 +18,6 @@ pub fn inventory_button(
     mut hovered: ResMut<ButtonHovered>,
     mut just_released: ResMut<ButtonJustReleased>,
 ) {
-    let mut released_button: Option<(Entity, i32)> = None;
-    let mut hovered_button: Option<(Entity, i32)> = None;
     for (entity, interaction, children, mut border_color, mut _ui_image, mut inventory_button) in
         &mut interaction_query
     {
@@ -33,15 +30,12 @@ pub fn inventory_button(
                 border_color.0 = Color::RED;
             }
             Interaction::Hovered => {
-                println!("hovered");
                 hovered.entity = Some(entity);
 
                 border_color.0 = Color::WHITE;
             }
             Interaction::None => {
                 border_color.0 = Color::BLACK;
-                println!("none");
-                println!("{:?}", inventory_button.previous_interaction);
                 if pressed.entity == Some(entity) {
                     pressed.entity = None;
                 }
@@ -51,7 +45,6 @@ pub fn inventory_button(
 
                 //specifically this mean the button was relaseing while not hovering the button.
                 if inventory_button.previous_interaction == Interaction::Pressed {
-                    println!("was relased");
                     just_released.entity = Some(entity);
                 }
             }

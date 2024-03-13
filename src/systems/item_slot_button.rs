@@ -3,7 +3,6 @@ use bevy::prelude::*;
 
 pub fn item_slot_button(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     mut interaction_query: Query<
         (&Interaction, &mut BorderColor, &mut UiImage, &SlotButton),
         (Changed<Interaction>, With<Button>),
@@ -19,10 +18,10 @@ pub fn item_slot_button(
             Interaction::Pressed => {
                 if let Some(inv_case) = inventory.slots.get(&slot_button.id) {
                     match inv_case {
-                        InventoryCase::Unique(name, entity) => {
+                        InventoryCase::Unique(_, to_equip_entity) => {
                             let (equipped_entity, _) = equiped_weapons.single_mut();
                             commands.entity(equipped_entity).remove::<EquipedWeapon>();
-                            commands.entity(*entity).insert(EquipedWeapon {});
+                            commands.entity(*to_equip_entity).insert(EquipedWeapon {});
                         }
                         _ => {}
                     }

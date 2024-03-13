@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use bevy::{
     prelude::*,
     sprite::{MaterialMesh2dBundle, Mesh2dHandle},
