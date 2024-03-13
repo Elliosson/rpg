@@ -53,8 +53,8 @@ pub fn weapon_hit(
         let true_angle = correct_angle(weapon_transform.rotation);
         weapon_rectangle.rotate(-true_angle);
         weapon_rectangle.set_position((
-            weapon_transform.translation.x - 35. * f32::cos(true_angle),
-            weapon_transform.translation.y + 35. * f32::sin(true_angle),
+            weapon_transform.translation.x - (width / 2.) * f32::cos(true_angle),
+            weapon_transform.translation.y + (width / 2.) * f32::sin(true_angle),
         ));
 
         for (entity, transform, shape, maybe_is_hit) in collidables.iter() {
