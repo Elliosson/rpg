@@ -29,6 +29,9 @@ pub fn weapon_hit(
 ) {
     //if the player is attacking
     if let Ok(player_entity) = player.get_single_mut() {
+        if equipped_weapon.is_empty() {
+            return;
+        }
         let (weapon_transform, weapon_shape) = equipped_weapon.single();
 
         let (width, height) = if let Sepax2dShape::Rectangle(width, height) = weapon_shape {

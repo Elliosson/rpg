@@ -5,6 +5,9 @@ pub fn weapon_movement(
     player: Query<&Transform, (With<Player>, Without<EquipedWeapon>)>,
     mut weapon: Query<&mut Transform, (With<EquipedWeapon>, Without<Player>)>,
 ) {
+    if weapon.is_empty() {
+        return;
+    }
     let mut weapon_transform = weapon.single_mut();
     let player_transform = player.single();
 

@@ -54,6 +54,7 @@ fn main() {
                 update_level_text,
                 equipped_item,
                 update_inventoty_ui,
+                update_action_bar_ui,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),

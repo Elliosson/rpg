@@ -2,6 +2,7 @@ use crate::components::*;
 use bevy::prelude::*;
 
 pub fn item_slot_button(
+    mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut interaction_query: Query<
         (&Interaction, &mut BorderColor, &mut UiImage, &SlotButton),
@@ -11,20 +12,22 @@ pub fn item_slot_button(
         (Entity, &mut Handle<Image>),
         (With<EquipedWeapon>, Without<SlotButton>),
     >,
+    inventory: Res<Inventory>,
 ) {
-    let hammer: Handle<Image> = asset_server.load("hammer_icon.png");
-    let sword: Handle<Image> = asset_server.load("sword_icon.png");
-    let (_, mut equiped_weapon_image) = equiped_weapons.single_mut();
-
     for (interaction, mut border_color, mut _ui_image, slot_button) in &mut interaction_query {
         match *interaction {
             Interaction::Pressed => {
-                if slot_button.id == 1 {
-                    *equiped_weapon_image = hammer.clone();
+                if let Some(inv_case) = inventory.slots.get(&slot_button.id) {
+                    match inv_case {
+                        InventoryCase::Unique(name, entity) => {
+                            let (equipped_entity, _) = equiped_weapons.single_mut();
+                            commands.entity(equipped_entity).remove::<EquipedWeapon>();
+                            commands.entity(*entity).insert(EquipedWeapon {});
+                        }
+                        _ => {}
+                    }
                 }
-                if slot_button.id == 2 {
-                    *equiped_weapon_image = sword.clone();
-                }
+
                 border_color.0 = Color::RED;
             }
             Interaction::Hovered => {

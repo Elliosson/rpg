@@ -42,3 +42,5 @@ mod equipped_item;
 pub use equipped_item::*;
 mod update_inventoty_ui;
 pub use update_inventoty_ui::*;
+mod update_action_bar_ui;
+pub use update_action_bar_ui::*;
