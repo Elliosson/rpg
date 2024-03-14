@@ -178,3 +178,8 @@ pub struct StoreImageHandle {
 pub struct ActionBarUsed {
     pub id: Option<i32>,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct HealthPotion {
+    pub heal: f32,
+}

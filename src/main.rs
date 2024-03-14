@@ -191,6 +191,10 @@ fn setup(
             ),
             (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
             (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
+            (
+                4,
+                InventoryCase::Unique("health_potion".to_string(), lance.clone()),
+            ),
         ]
         .iter()
         .cloned()

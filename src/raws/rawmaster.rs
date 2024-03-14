@@ -27,6 +27,7 @@ pub struct Template {
     pub equiped_weapon: Option<EquipedWeapon>,
     pub tree: Option<Tree>,
     pub unique_item: Option<UniqueItem>,
+    pub healt_potion: Option<HealthPotion>,
 }
 
 pub struct RawMaster {
@@ -135,6 +136,9 @@ pub fn spawn_props(
         commands.entity(entity).insert(comp.clone());
     }
     if let Some(comp) = &template.unique_item {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.healt_potion {
         commands.entity(entity).insert(comp.clone());
     }
 

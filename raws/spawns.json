@@ -71,6 +71,12 @@
                 ]
             },
             "unique_item": {}
+        },
+        {
+            "name": "health_potion",
+            "image": "health_potion.png",
+            "health_potion": {},
+            "unique_item": {}
         }
     ]
 }
