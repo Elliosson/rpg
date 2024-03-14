@@ -7,6 +7,7 @@ pub fn move_player(
     mut query: Query<&mut Transform, With<Player>>,
     mut next_inventory_state: ResMut<NextState<InventoryUiState>>,
     inventory_state: Res<State<InventoryUiState>>,
+    mut action_bar_used: ResMut<ActionBarUsed>,
 
     time: Res<Time>,
 ) {
@@ -23,6 +24,24 @@ pub fn move_player(
         }
     }
 
+    //Action bar
+    if keyboard_input.just_pressed(KeyCode::Digit1) {
+        action_bar_used.id = Some(1);
+    }
+    if keyboard_input.just_pressed(KeyCode::Digit2) {
+        action_bar_used.id = Some(2);
+    }
+    if keyboard_input.just_pressed(KeyCode::Digit3) {
+        action_bar_used.id = Some(3);
+    }
+    if keyboard_input.just_pressed(KeyCode::Digit4) {
+        action_bar_used.id = Some(4);
+    }
+    if keyboard_input.just_pressed(KeyCode::Digit5) {
+        action_bar_used.id = Some(5);
+    }
+
+    // Movement
     if keyboard_input.pressed(KeyCode::ArrowLeft) || keyboard_input.pressed(KeyCode::KeyA) {
         direction_x -= 1.0;
     }

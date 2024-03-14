@@ -35,6 +35,8 @@ fn main() {
             FixedUpdate,
             (
                 move_player,
+                use_action_bar,
+                equipped_item,
                 monster_find_target,
                 move_slim,
                 camera_on_player,
@@ -50,10 +52,8 @@ fn main() {
                 death,
                 drag_and_drop,
                 update_level_text,
-                equipped_item,
                 update_inventoty_ui,
                 update_action_bar_ui,
-                use_action_bar,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
