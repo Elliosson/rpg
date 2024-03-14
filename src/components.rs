@@ -172,3 +172,9 @@ pub struct Inventory {
 pub struct StoreImageHandle {
     pub images: HashMap<String, Handle<Image>>,
 }
+
+//ensure the images stay loaded.
+#[derive(Resource, Clone)]
+pub struct ActionBarUsed {
+    pub id: Option<i32>,
+}

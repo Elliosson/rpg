@@ -53,6 +53,7 @@ fn main() {
                 equipped_item,
                 update_inventoty_ui,
                 update_action_bar_ui,
+                use_action_bar,
             )
                 // `chain`ing systems together runs them in order
                 .chain(),
@@ -75,6 +76,7 @@ fn main() {
         .insert_resource(ButtonHovered { entity: None })
         .insert_resource(ButtonPressed { entity: None })
         .insert_resource(ButtonJustReleased { entity: None })
+        .insert_resource(ActionBarUsed { id: None })
         .run();
 }
 
