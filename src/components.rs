@@ -183,3 +183,8 @@ pub struct ActionBarUsed {
 pub struct HealthPotion {
     pub heal: f32,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct ActivatedBy {
+    pub entity: Entity,
+}

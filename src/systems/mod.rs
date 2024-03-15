@@ -38,3 +38,5 @@ mod ui;
 pub use ui::*;
 mod use_action_bar;
 pub use use_action_bar::*;
+mod health_potion;
+pub use health_potion::*;

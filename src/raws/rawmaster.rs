@@ -27,7 +27,7 @@ pub struct Template {
     pub equiped_weapon: Option<EquipedWeapon>,
     pub tree: Option<Tree>,
     pub unique_item: Option<UniqueItem>,
-    pub healt_potion: Option<HealthPotion>,
+    pub health_potion: Option<HealthPotion>,
 }
 
 pub struct RawMaster {
@@ -68,16 +68,38 @@ pub fn spawn_props(
     pos: (f32, f32),
     template: &Template,
 ) -> Entity {
-    let entity = commands
-        .spawn((SpriteBundle {
-            transform: Transform {
-                translation: Vec3::new(pos.0, pos.1, 0.0),
+    let entity = spawn_item(commands, template);
+    commands.entity(entity).insert(SpriteBundle {
+        transform: Transform {
+            translation: Vec3::new(pos.0, pos.1, 0.0),
+            ..default()
+        },
+        texture: asset_server.load(&template.image),
+        ..default()
+    });
+
+    if let Some(comp) = &template.life {
+        commands.entity(entity).insert(comp.clone());
+
+        //life bar
+        commands.spawn((
+            MaterialMesh2dBundle {
+                mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
+                material: materials.add(ColorMaterial::default()),
+                transform: Transform::from_xyz(0.0, 0.0, 0.0),
                 ..default()
             },
-            texture: asset_server.load(&template.image),
-            ..default()
-        },))
-        .id();
+            LifeBar {
+                linked_entity: entity,
+            },
+        ));
+    }
+
+    return entity;
+}
+
+pub fn spawn_item(commands: &mut Commands, template: &Template) -> Entity {
+    let entity = commands.spawn(()).id();
 
     commands.entity(entity).insert(PropName {
         name: template.name.clone(),
@@ -97,22 +119,6 @@ pub fn spawn_props(
     }
     if let Some(comp) = &template.shape {
         commands.entity(entity).insert(comp.clone());
-    }
-    if let Some(comp) = &template.life {
-        commands.entity(entity).insert(comp.clone());
-
-        //life bar
-        commands.spawn((
-            MaterialMesh2dBundle {
-                mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
-                material: materials.add(ColorMaterial::default()),
-                transform: Transform::from_xyz(0.0, 0.0, 0.0),
-                ..default()
-            },
-            LifeBar {
-                linked_entity: entity,
-            },
-        ));
     }
     if let Some(comp) = &template.weight {
         commands.entity(entity).insert(comp.clone());
@@ -138,7 +144,7 @@ pub fn spawn_props(
     if let Some(comp) = &template.unique_item {
         commands.entity(entity).insert(comp.clone());
     }
-    if let Some(comp) = &template.healt_potion {
+    if let Some(comp) = &template.health_potion {
         commands.entity(entity).insert(comp.clone());
     }
 
@@ -162,4 +168,8 @@ pub fn spawn_named_entity(
         pos,
         &raws.raws.props[raws.prop_index[&name]],
     );
+}
+
+pub fn spawn_named_item(commands: &mut Commands, name: String, raws: &RawMaster) -> Entity {
+    return spawn_item(commands, &raws.raws.props[raws.prop_index[&name]]);
 }

@@ -58,6 +58,7 @@ fn main() {
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
+        .add_systems(FixedUpdate, health_potion.chain())
         .add_systems(
             Update,
             (
@@ -191,10 +192,7 @@ fn setup(
             ),
             (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
             (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
-            (
-                4,
-                InventoryCase::Unique("health_potion".to_string(), lance.clone()),
-            ),
+            (4, InventoryCase::Stack("health_potion".to_string(), 10)),
         ]
         .iter()
         .cloned()
