@@ -15,7 +15,7 @@ pub fn use_action_bar(
     player: Query<Entity, With<Player>>,
 ) {
     if let Some(id) = action_bar_used.id {
-        if let Some(mut inv_case) = inventory.slots.get_mut(&id) {
+        if let Some(inv_case) = inventory.slots.get_mut(&id) {
             match inv_case {
                 InventoryCase::Unique(_, to_equip_entity) => {
                     let (equipped_entity, _) = equiped_weapons.single_mut();
@@ -41,7 +41,6 @@ pub fn use_action_bar(
                         });
                     }
                 }
-                _ => {}
             }
         }
     }
