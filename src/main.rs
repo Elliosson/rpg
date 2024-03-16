@@ -110,7 +110,10 @@ fn setup(
             DeltaAngle { delta: 0. },
             Mobile {},
             Weight { weight: 1000 },
-            Lifepoint { life: 100. },
+            Lifepoint {
+                life: 100.,
+                max: 100.,
+            },
             Level { level: 1, xp: 0. },
         ))
         .id();

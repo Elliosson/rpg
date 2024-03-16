@@ -9,6 +9,7 @@ pub fn health_potion(
     for (entity, potion, activated_by) in potions.iter() {
         if let Ok((_, mut lifepoint)) = creatures.get_mut(activated_by.entity) {
             lifepoint.life += potion.heal;
+            lifepoint.life = f32::min(lifepoint.life + potion.heal, lifepoint.max);
         }
         commands.entity(entity).despawn();
     }

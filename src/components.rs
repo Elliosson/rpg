@@ -57,6 +57,7 @@ pub struct IsHitAnimation {
 #[derive(Component, Deserialize, Debug, Clone)]
 pub struct Lifepoint {
     pub life: f32,
+    pub max: f32,
 }
 
 #[derive(Component, Deserialize, Debug, Clone)]

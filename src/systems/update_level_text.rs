@@ -9,8 +9,8 @@ pub fn update_level_text(
     for mut text in &mut query {
         // Update the value of the second section
         text.sections[0].value = format!(
-            "Level: {}  XP: {:.1}, Life: {:.1}",
-            level.level, level.xp, life.life
+            "Level: {}  XP: {:.1}, Life: {:.1}/{:.0}",
+            level.level, level.xp, life.life, life.max
         );
     }
 }
