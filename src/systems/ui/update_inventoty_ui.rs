@@ -2,14 +2,19 @@ use crate::components::*;
 use bevy::prelude::*;
 
 pub fn update_inventoty_ui(
-    mut buttons: Query<(&mut UiImage, &InventorySlot), With<Button>>,
+    mut buttons: Query<(&mut UiImage, &Children, &InventorySlot), With<Button>>,
     inventoy: Res<Inventory>,
     asset_server: Res<AssetServer>,
+    mut text_query: Query<&mut Text>,
 ) {
-    for (mut ui_image, inventory_button) in &mut buttons {
+    for (mut ui_image, children, inventory_button) in &mut buttons {
         if let Some(inv_case) = inventoy.slots.get(&inventory_button.id) {
             let name = match inv_case {
-                InventoryCase::Stack(name, _) => name,
+                InventoryCase::Stack(name, amount) => {
+                    let mut text = text_query.get_mut(children[0]).unwrap();
+                    text.sections[0].value = amount.to_string();
+                    name
+                }
                 InventoryCase::Unique(name, _) => name,
             };
 

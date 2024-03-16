@@ -33,7 +33,7 @@ pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>
         ))
         .with_children(|parent| {
             parent.spawn(TextBundle::from_section(
-                format!("{}", id),
+                "",
                 TextStyle {
                     font: asset_server.load("fonts/FiraSans-Bold.ttf"),
                     font_size: 20.0,
@@ -78,7 +78,7 @@ pub fn inventory_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
                         ..default()
                     })
                     .with_children(|parent| {
-                        for x in 0..INVENTORY_WIDTH {
+                        for x in 1..INVENTORY_WIDTH + 1 {
                             inventory_slot(parent, &asset_server, y * INVENTORY_WIDTH + x);
                         }
                     });

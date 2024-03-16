@@ -6,24 +6,20 @@ pub fn inventory_button(
         (
             Entity,
             &Interaction,
-            &Children,
             &mut BorderColor,
             &mut UiImage,
             &mut InventorySlot,
         ),
         (Changed<Interaction>, With<Button>),
     >,
-    mut text_query: Query<&mut Text>,
+
     mut pressed: ResMut<ButtonPressed>,
     mut hovered: ResMut<ButtonHovered>,
     mut just_released: ResMut<ButtonJustReleased>,
 ) {
-    for (entity, interaction, children, mut border_color, mut _ui_image, mut inventory_button) in
+    for (entity, interaction, mut border_color, mut _ui_image, mut inventory_button) in
         &mut interaction_query
     {
-        let mut text = text_query.get_mut(children[0]).unwrap();
-        text.sections[0].value = inventory_button.id.to_string();
-
         match *interaction {
             Interaction::Pressed => {
                 pressed.entity = Some(entity);
