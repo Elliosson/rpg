@@ -58,7 +58,7 @@ fn main() {
                 // `chain`ing systems together runs them in order
                 .chain(),
         )
-        .add_systems(FixedUpdate, health_potion.chain())
+        .add_systems(FixedUpdate, (health_potion, level_up).chain())
         .add_systems(
             Update,
             (

@@ -40,3 +40,5 @@ mod use_action_bar;
 pub use use_action_bar::*;
 mod health_potion;
 pub use health_potion::*;
+mod level_up;
+pub use level_up::*;
