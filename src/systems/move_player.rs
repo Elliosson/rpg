@@ -3,15 +3,16 @@ use crate::PLAYER_SPEED;
 use bevy::prelude::*;
 
 pub fn move_player(
+    mut commands: Commands,
     keyboard_input: Res<ButtonInput<KeyCode>>,
-    mut query: Query<&mut Transform, With<Player>>,
+    mut player: Query<(Entity, &mut Transform), With<Player>>,
     mut next_inventory_state: ResMut<NextState<InventoryUiState>>,
     inventory_state: Res<State<InventoryUiState>>,
     mut action_bar_used: ResMut<ActionBarUsed>,
 
     time: Res<Time>,
 ) {
-    let mut player_transform = query.single_mut();
+    let (player_entity, mut player_transform) = player.single_mut();
     let mut direction_x = 0.0;
     let mut direction_y = 0.0;
 
@@ -39,6 +40,10 @@ pub fn move_player(
     }
     if keyboard_input.just_pressed(KeyCode::Digit5) {
         action_bar_used.id = Some(5);
+    }
+
+    if keyboard_input.just_pressed(KeyCode::KeyE) {
+        commands.entity(player_entity).insert(WantToPickup {});
     }
 
     // Movement

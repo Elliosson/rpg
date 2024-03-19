@@ -189,3 +189,9 @@ pub struct HealthPotion {
 pub struct ActivatedBy {
     pub entity: Entity,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Pickable {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct WantToPickup {}

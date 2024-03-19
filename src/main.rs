@@ -66,6 +66,7 @@ fn main() {
                 mouse_button_input,
                 item_slot_button,
                 inventory_button,
+                pickup,
             ),
         )
         .init_state::<InventoryUiState>()
@@ -267,4 +268,16 @@ fn setup(
         "slim".to_string(),
         raws,
     );
+
+    let health_potion = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (300., 300.),
+        "health_potion".to_string(),
+        raws,
+    );
+
+    commands.entity(health_potion).insert(Pickable {});
 }

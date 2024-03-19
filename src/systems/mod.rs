@@ -40,3 +40,5 @@ mod health_potion;
 pub use health_potion::*;
 mod level_up;
 pub use level_up::*;
+mod pickup;
+pub use pickup::*;
