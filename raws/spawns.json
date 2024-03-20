@@ -20,7 +20,8 @@
             "contact_attack": {},
             "drop": {
                 "name": "health_potion"
-            }
+            },
+            "z_layer": "Creature"
         },
         {
             "name": "rock",
@@ -42,7 +43,8 @@
                 ]
             },
             "equiped_weapon": {},
-            "unique_item": {}
+            "unique_item": {},
+            "z_layer": "Weapon"
         },
         {
             "name": "tree",
@@ -63,7 +65,8 @@
                     6.0
                 ]
             },
-            "unique_item": {}
+            "unique_item": {},
+            "z_layer": "Weapon"
         },
         {
             "name": "lance",
@@ -74,7 +77,8 @@
                     6.0
                 ]
             },
-            "unique_item": {}
+            "unique_item": {},
+            "z_layer": "Weapon"
         },
         {
             "name": "health_potion",
@@ -82,7 +86,8 @@
             "health_potion": {
                 "heal": 10.0
             },
-            "pickable": {}
+            "pickable": {},
+            "z_layer": "Item"
         }
     ]
 }

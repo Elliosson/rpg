@@ -205,3 +205,26 @@ pub struct Drop {
 pub struct ToSpawn {
     pub items: Vec<(String, f32, f32)>,
 }
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub enum ZLayer {
+    Background,
+    Object,
+    Item,
+    Creature,
+    Player,
+    Weapon,
+}
+
+impl ZLayer {
+    pub fn value(&self) -> f32 {
+        match *self {
+            ZLayer::Background => 0.,
+            ZLayer::Object => 1.,
+            ZLayer::Item => 2.,
+            ZLayer::Creature => 3.,
+            ZLayer::Player => 4.,
+            ZLayer::Weapon => 5.,
+        }
+    }
+}

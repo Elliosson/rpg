@@ -30,6 +30,7 @@ pub struct Template {
     pub health_potion: Option<HealthPotion>,
     pub drop: Option<Drop>,
     pub pickable: Option<Pickable>,
+    pub z_layer: Option<ZLayer>,
 }
 
 pub struct RawMaster {
@@ -71,9 +72,16 @@ pub fn spawn_props(
     template: &Template,
 ) -> Entity {
     let entity = spawn_item(commands, template);
+
+    let z = if let Some(z_layer) = &template.z_layer {
+        println!("z val: {}", z_layer.value());
+        z_layer.value()
+    } else {
+        0.
+    };
     commands.entity(entity).insert(SpriteBundle {
         transform: Transform {
-            translation: Vec3::new(pos.0, pos.1, 0.0),
+            translation: Vec3::new(pos.0, pos.1, z),
             ..default()
         },
         texture: asset_server.load(&template.image),
@@ -88,7 +96,7 @@ pub fn spawn_props(
             MaterialMesh2dBundle {
                 mesh: Mesh2dHandle(meshes.add(Rectangle::new(10.0, 1.0))),
                 material: materials.add(ColorMaterial::default()),
-                transform: Transform::from_xyz(0.0, 0.0, 0.0),
+                transform: Transform::from_xyz(0.0, 0.0, z),
                 ..default()
             },
             LifeBar {
@@ -153,6 +161,9 @@ pub fn spawn_item(commands: &mut Commands, template: &Template) -> Entity {
         commands.entity(entity).insert(comp.clone());
     }
     if let Some(comp) = &template.pickable {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.z_layer {
         commands.entity(entity).insert(comp.clone());
     }
 
