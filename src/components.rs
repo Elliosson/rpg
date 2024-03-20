@@ -195,3 +195,13 @@ pub struct Pickable {}
 
 #[derive(Component, Deserialize, Debug, Clone)]
 pub struct WantToPickup {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Drop {
+    pub name: String,
+}
+
+#[derive(Resource, Deserialize, Debug, Clone)]
+pub struct ToSpawn {
+    pub items: Vec<(String, f32, f32)>,
+}

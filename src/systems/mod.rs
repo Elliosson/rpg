@@ -42,3 +42,5 @@ mod level_up;
 pub use level_up::*;
 mod pickup;
 pub use pickup::*;
+mod spawner;
+pub use spawner::*;

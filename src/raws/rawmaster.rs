@@ -28,6 +28,8 @@ pub struct Template {
     pub tree: Option<Tree>,
     pub unique_item: Option<UniqueItem>,
     pub health_potion: Option<HealthPotion>,
+    pub drop: Option<Drop>,
+    pub pickable: Option<Pickable>,
 }
 
 pub struct RawMaster {
@@ -145,6 +147,12 @@ pub fn spawn_item(commands: &mut Commands, template: &Template) -> Entity {
         commands.entity(entity).insert(comp.clone());
     }
     if let Some(comp) = &template.health_potion {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.drop {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.pickable {
         commands.entity(entity).insert(comp.clone());
     }
 

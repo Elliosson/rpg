@@ -67,6 +67,7 @@ fn main() {
                 item_slot_button,
                 inventory_button,
                 pickup,
+                spawner,
             ),
         )
         .init_state::<InventoryUiState>()
@@ -79,6 +80,7 @@ fn main() {
         .insert_resource(ButtonPressed { entity: None })
         .insert_resource(ButtonJustReleased { entity: None })
         .insert_resource(ActionBarUsed { id: None })
+        .insert_resource(ToSpawn { items: Vec::new() })
         .run();
 }
 
@@ -99,7 +101,7 @@ fn setup(
         .spawn((
             SpriteBundle {
                 transform: Transform {
-                    translation: Vec3::new(0.0, 0.0, 0.0),
+                    translation: Vec3::new(0.0, 0.0, 1.0),
                     ..default()
                 },
                 texture: asset_server.load("character.png"),

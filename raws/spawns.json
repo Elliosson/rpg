@@ -17,7 +17,10 @@
                 "weight": 2000
             },
             "monster": {},
-            "contact_attack": {}
+            "contact_attack": {},
+            "drop": {
+                "name": "health_potion"
+            }
         },
         {
             "name": "rock",
@@ -78,7 +81,8 @@
             "image": "health_potion.png",
             "health_potion": {
                 "heal": 10.0
-            }
+            },
+            "pickable": {}
         }
     ]
 }
