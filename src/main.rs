@@ -144,6 +144,34 @@ fn setup(
                 "hammer_icon".to_string(),
                 asset_server.load("hammer_icon.png"),
             ),
+            (
+                "health_potion".to_string(),
+                asset_server.load("health_potion_icon.png"),
+            ),
+            (
+                "armor_transparent".to_string(),
+                asset_server.load("armor_transparent.png"),
+            ),
+            (
+                "boots_transparent".to_string(),
+                asset_server.load("boots_transparent.png"),
+            ),
+            (
+                "helmet_transparent".to_string(),
+                asset_server.load("helmet_transparent.png"),
+            ),
+            (
+                "armor_iron".to_string(),
+                asset_server.load("armor_iron.png"),
+            ),
+            (
+                "boots_iron".to_string(),
+                asset_server.load("boots_iron.png"),
+            ),
+            (
+                "helmet_iron".to_string(),
+                asset_server.load("helmet_iron.png"),
+            ),
         ]
         .iter()
         .cloned()
