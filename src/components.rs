@@ -194,6 +194,11 @@ pub struct ActivatedBy {
 pub struct Pickable {}
 
 #[derive(Component, Deserialize, Debug, Clone)]
+pub struct GearSlot {
+    pub name: String,
+}
+
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct WantToPickup {}
 
 #[derive(Component, Deserialize, Debug, Clone)]

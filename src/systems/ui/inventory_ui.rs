@@ -43,15 +43,113 @@ pub fn inventory_slot(parent: &mut ChildBuilder, asset_server: &Res<AssetServer>
         });
 }
 
+pub fn gear_ui(parent: &mut ChildBuilder, asset_server: Res<AssetServer>) {
+    parent
+        .spawn(NodeBundle {
+            style: Style {
+                margin: UiRect::all(Val::Px(1.0)),
+                width: Val::Px(CELL_SIZE * 2.),
+                height: Val::Percent(100.0),
+                flex_direction: FlexDirection::Column,
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                ..default()
+            },
+            ..default()
+        })
+        .with_children(|parent| {
+            parent.spawn((
+                ButtonBundle {
+                    style: Style {
+                        margin: UiRect::all(Val::Px(1.0)),
+                        width: Val::Px(CELL_SIZE),
+                        height: Val::Px(CELL_SIZE),
+                        border: UiRect::all(Val::Px(1.0)),
+                        // horizontally center child text
+                        justify_content: JustifyContent::Center,
+                        // vertically center child text
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    image: UiImage::new(asset_server.load("helmet_transparent.png")),
+
+                    border_color: BorderColor(Color::BLACK),
+                    ..default()
+                },
+                InventorySlot {
+                    id: 101,
+                    previous_interaction: Interaction::None,
+                },
+                GearSlot {
+                    name: "helmet".to_string(),
+                },
+            ));
+
+            parent.spawn((
+                ButtonBundle {
+                    style: Style {
+                        margin: UiRect::all(Val::Px(1.0)),
+                        width: Val::Px(CELL_SIZE),
+                        height: Val::Px(CELL_SIZE),
+                        border: UiRect::all(Val::Px(1.0)),
+                        // horizontally center child text
+                        justify_content: JustifyContent::Center,
+                        // vertically center child text
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    image: UiImage::new(asset_server.load("armor_transparent.png")),
+
+                    border_color: BorderColor(Color::BLACK),
+                    ..default()
+                },
+                InventorySlot {
+                    id: 102,
+                    previous_interaction: Interaction::None,
+                },
+                GearSlot {
+                    name: "armor".to_string(),
+                },
+            ));
+
+            parent.spawn((
+                ButtonBundle {
+                    style: Style {
+                        margin: UiRect::all(Val::Px(1.0)),
+                        width: Val::Px(CELL_SIZE),
+                        height: Val::Px(CELL_SIZE),
+                        border: UiRect::all(Val::Px(1.0)),
+                        // horizontally center child text
+                        justify_content: JustifyContent::Center,
+                        // vertically center child text
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    image: UiImage::new(asset_server.load("boots_transparent.png")),
+
+                    border_color: BorderColor(Color::BLACK),
+                    ..default()
+                },
+                InventorySlot {
+                    id: 103,
+                    previous_interaction: Interaction::None,
+                },
+                GearSlot {
+                    name: "boots".to_string(),
+                },
+            ));
+        });
+}
+
 pub fn inventory_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands
         .spawn((
             NodeBundle {
                 style: Style {
-                    width: Val::Px(400.0),
+                    width: Val::Px(500.0),
                     height: Val::Px(400.0),
                     margin: UiRect::all(Val::Px(2.0)),
-                    flex_direction: FlexDirection::Column,
+                    flex_direction: FlexDirection::Row,
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::Center,
 
@@ -63,25 +161,47 @@ pub fn inventory_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
             InventoryScreen,
         ))
         .with_children(|parent| {
-            for y in 0..INVENTORY_HEIGHT {
-                parent
-                    .spawn(NodeBundle {
+            parent
+                .spawn((
+                    NodeBundle {
                         style: Style {
-                            margin: UiRect::all(Val::Px(1.0)),
-                            width: Val::Percent(100.0),
-                            height: Val::Px(CELL_SIZE),
-                            flex_direction: FlexDirection::Row,
+                            width: Val::Px(400.0),
+                            height: Val::Px(400.0),
+                            margin: UiRect::all(Val::Px(2.0)),
+                            flex_direction: FlexDirection::Column,
                             align_items: AlignItems::Center,
                             justify_content: JustifyContent::Center,
+
                             ..default()
                         },
+                        background_color: BackgroundColor(Color::DARK_GRAY),
                         ..default()
-                    })
-                    .with_children(|parent| {
-                        for x in 1..INVENTORY_WIDTH + 1 {
-                            inventory_slot(parent, &asset_server, y * INVENTORY_WIDTH + x);
-                        }
-                    });
-            }
+                    },
+                    InventoryScreen,
+                ))
+                .with_children(|parent| {
+                    for y in 0..INVENTORY_HEIGHT {
+                        parent
+                            .spawn(NodeBundle {
+                                style: Style {
+                                    margin: UiRect::all(Val::Px(1.0)),
+                                    width: Val::Percent(100.0),
+                                    height: Val::Px(CELL_SIZE),
+                                    flex_direction: FlexDirection::Row,
+                                    align_items: AlignItems::Center,
+                                    justify_content: JustifyContent::Center,
+                                    ..default()
+                                },
+                                ..default()
+                            })
+                            .with_children(|parent| {
+                                for x in 1..INVENTORY_WIDTH + 1 {
+                                    inventory_slot(parent, &asset_server, y * INVENTORY_WIDTH + x);
+                                }
+                            });
+                    }
+                });
+
+            gear_ui(parent, asset_server);
         });
 }
