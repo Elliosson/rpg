@@ -28,6 +28,8 @@ pub fn update_inventoty_ui(
         } else {
             let texture_handle: Handle<Image> = asset_server.load("slot.png");
             *ui_image = UiImage::new(texture_handle.clone());
+            let mut text = text_query.get_mut(children[0]).unwrap();
+            text.sections[0].value = "".to_string();
         }
     }
 }
