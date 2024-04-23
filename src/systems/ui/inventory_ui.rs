@@ -58,86 +58,119 @@ pub fn gear_ui(parent: &mut ChildBuilder, asset_server: Res<AssetServer>) {
             ..default()
         })
         .with_children(|parent| {
-            parent.spawn((
-                ButtonBundle {
-                    style: Style {
-                        margin: UiRect::all(Val::Px(1.0)),
-                        width: Val::Px(CELL_SIZE),
-                        height: Val::Px(CELL_SIZE),
-                        border: UiRect::all(Val::Px(1.0)),
-                        // horizontally center child text
-                        justify_content: JustifyContent::Center,
-                        // vertically center child text
-                        align_items: AlignItems::Center,
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: Style {
+                            margin: UiRect::all(Val::Px(1.0)),
+                            width: Val::Px(CELL_SIZE),
+                            height: Val::Px(CELL_SIZE),
+                            border: UiRect::all(Val::Px(1.0)),
+                            // horizontally center child text
+                            justify_content: JustifyContent::Center,
+                            // vertically center child text
+                            align_items: AlignItems::Center,
+                            ..default()
+                        },
+                        image: UiImage::new(asset_server.load("slot.png")),
+
+                        border_color: BorderColor(Color::BLACK),
                         ..default()
                     },
-                    image: UiImage::new(asset_server.load("helmet_transparent.png")),
+                    InventorySlot {
+                        id: 101,
+                        previous_interaction: Interaction::None,
+                    },
+                    GearSlot {
+                        name: "helmet".to_string(),
+                    },
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "",
+                        TextStyle {
+                            font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                            font_size: 20.0,
+                            color: Color::rgb(0.9, 0.9, 0.9),
+                        },
+                    ));
+                });
 
-                    border_color: BorderColor(Color::BLACK),
-                    ..default()
-                },
-                InventorySlot {
-                    id: 101,
-                    previous_interaction: Interaction::None,
-                },
-                GearSlot {
-                    name: "helmet".to_string(),
-                },
-            ));
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: Style {
+                            margin: UiRect::all(Val::Px(1.0)),
+                            width: Val::Px(CELL_SIZE),
+                            height: Val::Px(CELL_SIZE),
+                            border: UiRect::all(Val::Px(1.0)),
+                            // horizontally center child text
+                            justify_content: JustifyContent::Center,
+                            // vertically center child text
+                            align_items: AlignItems::Center,
+                            ..default()
+                        },
+                        image: UiImage::new(asset_server.load("armor_transparent.png")),
 
-            parent.spawn((
-                ButtonBundle {
-                    style: Style {
-                        margin: UiRect::all(Val::Px(1.0)),
-                        width: Val::Px(CELL_SIZE),
-                        height: Val::Px(CELL_SIZE),
-                        border: UiRect::all(Val::Px(1.0)),
-                        // horizontally center child text
-                        justify_content: JustifyContent::Center,
-                        // vertically center child text
-                        align_items: AlignItems::Center,
+                        border_color: BorderColor(Color::BLACK),
                         ..default()
                     },
-                    image: UiImage::new(asset_server.load("armor_transparent.png")),
+                    InventorySlot {
+                        id: 102,
+                        previous_interaction: Interaction::None,
+                    },
+                    GearSlot {
+                        name: "armor".to_string(),
+                    },
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "",
+                        TextStyle {
+                            font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                            font_size: 20.0,
+                            color: Color::rgb(0.9, 0.9, 0.9),
+                        },
+                    ));
+                });
 
-                    border_color: BorderColor(Color::BLACK),
-                    ..default()
-                },
-                InventorySlot {
-                    id: 102,
-                    previous_interaction: Interaction::None,
-                },
-                GearSlot {
-                    name: "armor".to_string(),
-                },
-            ));
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: Style {
+                            margin: UiRect::all(Val::Px(1.0)),
+                            width: Val::Px(CELL_SIZE),
+                            height: Val::Px(CELL_SIZE),
+                            border: UiRect::all(Val::Px(1.0)),
+                            // horizontally center child text
+                            justify_content: JustifyContent::Center,
+                            // vertically center child text
+                            align_items: AlignItems::Center,
+                            ..default()
+                        },
+                        image: UiImage::new(asset_server.load("boots_transparent.png")),
 
-            parent.spawn((
-                ButtonBundle {
-                    style: Style {
-                        margin: UiRect::all(Val::Px(1.0)),
-                        width: Val::Px(CELL_SIZE),
-                        height: Val::Px(CELL_SIZE),
-                        border: UiRect::all(Val::Px(1.0)),
-                        // horizontally center child text
-                        justify_content: JustifyContent::Center,
-                        // vertically center child text
-                        align_items: AlignItems::Center,
+                        border_color: BorderColor(Color::BLACK),
                         ..default()
                     },
-                    image: UiImage::new(asset_server.load("boots_transparent.png")),
-
-                    border_color: BorderColor(Color::BLACK),
-                    ..default()
-                },
-                InventorySlot {
-                    id: 103,
-                    previous_interaction: Interaction::None,
-                },
-                GearSlot {
-                    name: "boots".to_string(),
-                },
-            ));
+                    InventorySlot {
+                        id: 103,
+                        previous_interaction: Interaction::None,
+                    },
+                    GearSlot {
+                        name: "boots".to_string(),
+                    },
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "",
+                        TextStyle {
+                            font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                            font_size: 20.0,
+                            color: Color::rgb(0.9, 0.9, 0.9),
+                        },
+                    ));
+                });
         });
 }
 

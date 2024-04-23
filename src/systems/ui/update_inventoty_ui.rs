@@ -26,7 +26,16 @@ pub fn update_inventoty_ui(
 
             *ui_image = UiImage::new(texture_handle.clone());
         } else {
-            let texture_handle: Handle<Image> = asset_server.load("slot.png");
+            //todo, to clean somehow, to not rely on id.
+            let texture_handle: Handle<Image> = if inventory_button.id == 101 {
+                asset_server.load("helmet_transparent.png")
+            } else if inventory_button.id == 102 {
+                asset_server.load("armor_transparent.png")
+            } else if inventory_button.id == 103 {
+                asset_server.load("boots_transparent.png")
+            } else {
+                asset_server.load("slot.png")
+            };
             *ui_image = UiImage::new(texture_handle.clone());
             let mut text = text_query.get_mut(children[0]).unwrap();
             text.sections[0].value = "".to_string();

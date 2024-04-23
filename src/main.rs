@@ -161,16 +161,16 @@ fn setup(
                 asset_server.load("helmet_transparent.png"),
             ),
             (
-                "armor_iron".to_string(),
-                asset_server.load("armor_iron.png"),
+                "armor_icon".to_string(),
+                asset_server.load("armor_icon.png"),
             ),
             (
-                "boots_iron".to_string(),
-                asset_server.load("boots_iron.png"),
+                "boots_icon".to_string(),
+                asset_server.load("boots_icon.png"),
             ),
             (
-                "helmet_iron".to_string(),
-                asset_server.load("helmet_iron.png"),
+                "helmet_icon".to_string(),
+                asset_server.load("helmet_icon.png"),
             ),
         ]
         .iter()
@@ -227,6 +227,18 @@ fn setup(
             (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
             (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
             (4, InventoryCase::Stack("health_potion".to_string(), 10)),
+            (
+                10,
+                InventoryCase::Unique("helmet".to_string(), lance.clone()),
+            ),
+            (
+                11,
+                InventoryCase::Unique("armor".to_string(), lance.clone()),
+            ),
+            (
+                12,
+                InventoryCase::Unique("boots".to_string(), lance.clone()),
+            ),
         ]
         .iter()
         .cloned()
