@@ -44,3 +44,5 @@ mod pickup;
 pub use pickup::*;
 mod spawner;
 pub use spawner::*;
+mod update_player_stats;
+pub use update_player_stats::*;

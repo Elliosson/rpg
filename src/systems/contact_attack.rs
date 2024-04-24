@@ -4,7 +4,13 @@ use sepax2d::Shape;
 
 pub fn contact_attack(
     attacking: Query<(Entity, &ContactAttack, &Target, &Transform, &Sepax2dShape)>,
-    mut creatures: Query<(Entity, &Transform, &Sepax2dShape, &mut Lifepoint)>,
+    mut creatures: Query<(
+        Entity,
+        &Transform,
+        &Sepax2dShape,
+        &mut Lifepoint,
+        Option<&CreatureStats>,
+    )>,
 ) {
     let mut attacked_by_shape: HashMap<Entity, Box<dyn Shape>> = HashMap::new();
     for (_, _, target, transform, sepax_shape) in attacking.iter() {
@@ -13,14 +19,18 @@ pub fn contact_attack(
     }
 
     for (attacked_entity, attacking_shape) in attacked_by_shape.iter() {
-        if let Ok((_, transform, sepax_shape, mut attacked_life)) =
+        if let Ok((_, transform, sepax_shape, mut attacked_life, maybe_attacked_stat)) =
             creatures.get_mut(*attacked_entity)
         {
             let attacked_shape = get_shape(transform, sepax_shape);
             let (x_delta, y_delta) =
                 sepax2d::prelude::sat_collision(&*attacked_shape, &**attacking_shape);
             if x_delta != 0. || y_delta != 0. {
-                attacked_life.life -= 1.;
+                let mut domage = 1.;
+                if let Some(stat) = maybe_attacked_stat {
+                    domage = f32::max(0., domage - stat.armor);
+                }
+                attacked_life.life -= domage;
             }
         }
     }

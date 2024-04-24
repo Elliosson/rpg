@@ -68,6 +68,7 @@ fn main() {
                 inventory_button,
                 pickup,
                 spawner,
+                update_player_stats,
             ),
         )
         .init_state::<InventoryUiState>()
@@ -113,6 +114,7 @@ fn setup(
             DeltaAngle { delta: 0. },
             Mobile {},
             Weight { weight: 1000 },
+            CreatureStats { armor: 0. },
             Lifepoint {
                 life: 100.,
                 max: 100.,

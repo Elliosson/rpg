@@ -211,6 +211,11 @@ pub struct Gear {
     pub armor: f32,
 }
 
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct CreatureStats {
+    pub armor: f32,
+}
+
 #[derive(Resource, Deserialize, Debug, Clone)]
 pub struct ToSpawn {
     pub items: Vec<(String, f32, f32)>,
