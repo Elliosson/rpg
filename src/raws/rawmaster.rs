@@ -31,6 +31,7 @@ pub struct Template {
     pub drop: Option<Drop>,
     pub pickable: Option<Pickable>,
     pub z_layer: Option<ZLayer>,
+    pub gear: Option<Gear>,
 }
 
 pub struct RawMaster {
@@ -164,6 +165,9 @@ pub fn spawn_item(commands: &mut Commands, template: &Template) -> Entity {
         commands.entity(entity).insert(comp.clone());
     }
     if let Some(comp) = &template.z_layer {
+        commands.entity(entity).insert(comp.clone());
+    }
+    if let Some(comp) = &template.gear {
         commands.entity(entity).insert(comp.clone());
     }
 

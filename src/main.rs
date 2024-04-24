@@ -218,6 +218,42 @@ fn setup(
         raws,
     );
 
+    let armor = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "armor".to_string(),
+        raws,
+    );
+    commands.entity(armor).remove::<Transform>();
+    commands.entity(armor).insert(Visibility::Hidden);
+
+    let helmet = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "helmet".to_string(),
+        raws,
+    );
+    commands.entity(helmet).remove::<Transform>();
+    commands.entity(helmet).insert(Visibility::Hidden);
+
+    let boots = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "boots".to_string(),
+        raws,
+    );
+    commands.entity(boots).remove::<Transform>();
+    commands.entity(boots).insert(Visibility::Hidden);
+
     commands.insert_resource(Inventory {
         slots: [
             (
@@ -229,15 +265,15 @@ fn setup(
             (4, InventoryCase::Stack("health_potion".to_string(), 10)),
             (
                 10,
-                InventoryCase::Unique("helmet".to_string(), lance.clone()),
+                InventoryCase::Unique("helmet".to_string(), helmet.clone()),
             ),
             (
                 11,
-                InventoryCase::Unique("armor".to_string(), lance.clone()),
+                InventoryCase::Unique("armor".to_string(), armor.clone()),
             ),
             (
                 12,
-                InventoryCase::Unique("boots".to_string(), lance.clone()),
+                InventoryCase::Unique("boots".to_string(), boots.clone()),
             ),
         ]
         .iter()

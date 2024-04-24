@@ -206,6 +206,11 @@ pub struct Drop {
     pub name: String,
 }
 
+#[derive(Component, Deserialize, Debug, Clone)]
+pub struct Gear {
+    pub armor: f32,
+}
+
 #[derive(Resource, Deserialize, Debug, Clone)]
 pub struct ToSpawn {
     pub items: Vec<(String, f32, f32)>,

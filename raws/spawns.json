@@ -88,6 +88,33 @@
             },
             "pickable": {},
             "z_layer": "Item"
+        },
+        {
+            "name": "armor",
+            "image": "armor.png",
+            "pickable": {},
+            "z_layer": "Item",
+            "gear": {
+                "armor": 2.0
+            }
+        },
+        {
+            "name": "helmet",
+            "image": "helmet.png",
+            "pickable": {},
+            "z_layer": "Item",
+            "gear": {
+                "armor": 1.0
+            }
+        },
+        {
+            "name": "boots",
+            "image": "boots.png",
+            "pickable": {},
+            "z_layer": "Item",
+            "gear": {
+                "armor": 1.0
+            }
         }
     ]
 }
