@@ -9,9 +9,11 @@ mod systems;
 use raws::{load_raws, spawn_named_entity, RawMaster, RAWS};
 pub use systems::*;
 use ui::spawn_ui;
+mod map_json;
 mod raws;
 mod ui;
 mod utils;
+use map_json::load_map;
 
 #[macro_use]
 extern crate lazy_static;
@@ -180,13 +182,11 @@ fn setup(
         .collect(),
     });
 
-    spawn_named_entity(
+    load_map(
         &mut commands,
         &asset_server,
         &mut meshes,
         &mut materials,
-        (200., 200.),
-        "tree".to_string(),
         raws,
     );
 
@@ -283,16 +283,6 @@ fn setup(
         .collect(),
     });
 
-    spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (-200., 200.),
-        "rock".to_string(),
-        raws,
-    );
-
     commands.spawn((
         SpriteBundle {
             transform: Transform {
@@ -308,46 +298,6 @@ fn setup(
     ));
 
     spawn_ui(&mut commands, &asset_server);
-
-    spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (500., 500.),
-        "slim".to_string(),
-        raws,
-    );
-
-    spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (600., 500.),
-        "slim".to_string(),
-        raws,
-    );
-
-    spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (500., 600.),
-        "slim".to_string(),
-        raws,
-    );
-
-    spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (-300., -300.),
-        "slim".to_string(),
-        raws,
-    );
 
     let health_potion = spawn_named_entity(
         &mut commands,
