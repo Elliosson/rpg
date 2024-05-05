@@ -87,19 +87,13 @@ fn main() {
         .run();
 }
 
-// Add the game's entities to our world
-fn setup(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
+fn init_player(
+    mut commands: &mut Commands,
+    asset_server: &Res<AssetServer>,
+    mut meshes: &mut ResMut<Assets<Mesh>>,
+    mut materials: &mut ResMut<Assets<ColorMaterial>>,
 ) {
-    load_raws();
     let raws: &RawMaster = &RAWS.lock().unwrap();
-
-    // Camera
-    commands.spawn((Camera2dBundle::default(), MainCamera {}));
-
     let player_entity = commands
         .spawn((
             SpriteBundle {
@@ -137,6 +131,113 @@ fn setup(
         },
     ));
 
+    let hammer = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "hammer".to_string(),
+        raws,
+    );
+
+    let sword = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "sword".to_string(),
+        raws,
+    );
+
+    let lance = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "lance".to_string(),
+        raws,
+    );
+
+    let armor = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "armor".to_string(),
+        raws,
+    );
+    commands.entity(armor).remove::<Transform>();
+    commands.entity(armor).insert(Visibility::Hidden);
+
+    let health_potion = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (300., 300.),
+        "health_potion".to_string(),
+        raws,
+    );
+
+    let helmet = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "helmet".to_string(),
+        raws,
+    );
+    commands.entity(helmet).remove::<Transform>();
+    commands.entity(helmet).insert(Visibility::Hidden);
+
+    let boots = spawn_named_entity(
+        &mut commands,
+        &asset_server,
+        &mut meshes,
+        &mut materials,
+        (0., 0.),
+        "boots".to_string(),
+        raws,
+    );
+    commands.entity(boots).remove::<Transform>();
+    commands.entity(boots).insert(Visibility::Hidden);
+
+    commands.entity(health_potion).insert(Pickable {});
+
+    commands.insert_resource(Inventory {
+        slots: [
+            (
+                1,
+                InventoryCase::Unique("hammer".to_string(), hammer.clone()),
+            ),
+            (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
+            (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
+            (4, InventoryCase::Stack("health_potion".to_string(), 10)),
+            (
+                10,
+                InventoryCase::Unique("helmet".to_string(), helmet.clone()),
+            ),
+            (
+                11,
+                InventoryCase::Unique("armor".to_string(), armor.clone()),
+            ),
+            (
+                12,
+                InventoryCase::Unique("boots".to_string(), boots.clone()),
+            ),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    });
+}
+
+fn cache_image_handles(commands: &mut Commands, asset_server: &Res<AssetServer>) {
     commands.insert_resource(StoreImageHandle {
         images: [
             ("lance".to_string(), asset_server.load("lance_icon.png")),
@@ -181,7 +282,24 @@ fn setup(
         .cloned()
         .collect(),
     });
+}
 
+// Add the game's entities to our world
+fn setup(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+) {
+    load_raws();
+
+    // Camera
+    commands.spawn((Camera2dBundle::default(), MainCamera {}));
+
+    cache_image_handles(&mut commands, &asset_server);
+    init_player(&mut commands, &asset_server, &mut meshes, &mut materials);
+
+    let raws: &RawMaster = &RAWS.lock().unwrap();
     load_map(
         &mut commands,
         &asset_server,
@@ -189,99 +307,6 @@ fn setup(
         &mut materials,
         raws,
     );
-
-    let hammer = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "hammer".to_string(),
-        raws,
-    );
-
-    let sword = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "sword".to_string(),
-        raws,
-    );
-
-    let lance = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "lance".to_string(),
-        raws,
-    );
-
-    let armor = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "armor".to_string(),
-        raws,
-    );
-    commands.entity(armor).remove::<Transform>();
-    commands.entity(armor).insert(Visibility::Hidden);
-
-    let helmet = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "helmet".to_string(),
-        raws,
-    );
-    commands.entity(helmet).remove::<Transform>();
-    commands.entity(helmet).insert(Visibility::Hidden);
-
-    let boots = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (0., 0.),
-        "boots".to_string(),
-        raws,
-    );
-    commands.entity(boots).remove::<Transform>();
-    commands.entity(boots).insert(Visibility::Hidden);
-
-    commands.insert_resource(Inventory {
-        slots: [
-            (
-                1,
-                InventoryCase::Unique("hammer".to_string(), hammer.clone()),
-            ),
-            (2, InventoryCase::Unique("sword".to_string(), sword.clone())),
-            (3, InventoryCase::Unique("lance".to_string(), lance.clone())),
-            (4, InventoryCase::Stack("health_potion".to_string(), 10)),
-            (
-                10,
-                InventoryCase::Unique("helmet".to_string(), helmet.clone()),
-            ),
-            (
-                11,
-                InventoryCase::Unique("armor".to_string(), armor.clone()),
-            ),
-            (
-                12,
-                InventoryCase::Unique("boots".to_string(), boots.clone()),
-            ),
-        ]
-        .iter()
-        .cloned()
-        .collect(),
-    });
 
     commands.spawn((
         SpriteBundle {
@@ -298,16 +323,4 @@ fn setup(
     ));
 
     spawn_ui(&mut commands, &asset_server);
-
-    let health_potion = spawn_named_entity(
-        &mut commands,
-        &asset_server,
-        &mut meshes,
-        &mut materials,
-        (300., 300.),
-        "health_potion".to_string(),
-        raws,
-    );
-
-    commands.entity(health_potion).insert(Pickable {});
 }
