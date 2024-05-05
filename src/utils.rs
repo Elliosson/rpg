@@ -3,7 +3,7 @@ use std::f32::consts::FRAC_PI_2;
 use bevy::prelude::{Quat, Transform};
 use sepax2d::{Rotate, Shape};
 
-use crate::Sepax2dShape;
+use crate::components::Sepax2dShape;
 
 pub fn correct_angle(rotation: Quat) -> f32 {
     let (_, angle) = rotation.to_axis_angle();

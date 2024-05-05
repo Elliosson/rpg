@@ -1,7 +1,6 @@
 use crate::components::*;
 use crate::PLAYER_SPEED;
 use bevy::prelude::*;
-
 pub fn move_player(
     mut commands: Commands,
     keyboard_input: Res<ButtonInput<KeyCode>>,
