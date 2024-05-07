@@ -31,7 +31,8 @@
             "shape": {
                 "Circle": 162.0
             },
-            "imobile": {}
+            "imobile": {},
+            "buildable": {}
         },
         {
             "name": "hammer",
@@ -54,7 +55,8 @@
             },
             "tree": {},
             "imobile": {},
-            "collision": {}
+            "collision": {},
+            "buildable": {}
         },
         {
             "name": "sword",

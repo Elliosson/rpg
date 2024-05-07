@@ -102,6 +102,7 @@ pub fn init_world() {
                 pickup,
                 spawner,
                 update_player_stats,
+                build,
             ),
         )
         .init_state::<InventoryUiState>()

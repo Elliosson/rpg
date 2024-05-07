@@ -98,6 +98,10 @@ pub struct ContactAttack {}
 pub struct Monster {}
 
 #[derive(Component, Deserialize, Debug, Clone)]
+
+pub struct Buildable {}
+
+#[derive(Component, Deserialize, Debug, Clone)]
 pub struct PropName {
     pub name: String,
 }
